@@ -1,19 +1,20 @@
 package kr.co.momuk.domain;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
 public class MemberDTO {
-	private String userid;
-	private String userpw;
-	private String username;
-	private String email;
-    private Timestamp regdate;
-    private Timestamp updatedate;
-}
+	private String id;
+	private String pw;
+	private String name;
+	private String zipcode;
+	private String streetAddress;
+	private String detailAddress;
+	private String tel;
+	private String gender;
+    private Date birth;
+    private Date regdate;
+    private String gradeKey;
+} 

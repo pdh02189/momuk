@@ -1,0 +1,226 @@
+/* Drop Tables */
+
+DROP TABLE cookingtip_board CASCADE CONSTRAINTS;
+DROP TABLE event_board CASCADE CONSTRAINTS;
+DROP TABLE heart CASCADE CONSTRAINTS;
+DROP TABLE ingredient CASCADE CONSTRAINTS;
+DROP TABLE recipe_step CASCADE CONSTRAINTS;
+DROP TABLE recipe_board CASCADE CONSTRAINTS;
+DROP TABLE reply CASCADE CONSTRAINTS;
+DROP TABLE cart CASCADE CONSTRAINTS;
+DROP TABLE store_board CASCADE CONSTRAINTS;
+DROP TABLE common_board CASCADE CONSTRAINTS;
+DROP TABLE board_type CASCADE CONSTRAINTS;
+DROP TABLE member CASCADE CONSTRAINTS;
+DROP TABLE grade CASCADE CONSTRAINTS;
+
+
+
+
+/* Create Tables */
+
+CREATE TABLE member
+(
+   id varchar2(40) NOT NULL,
+   pw varchar2(40) NOT NULL,
+   name varchar2(30) NOT NULL,
+   zipcode varchar2(20),
+   streetAddress varchar2(200),
+   detailAddress varchar2(200),
+   tel varchar2(50),
+   gender varchar2(2),
+   birth date,
+   regdate date DEFAULT SYSDATE,
+   gradeKey varchar2(2) NOT NULL
+);
+
+alter table member
+add constraint member_id_PK primary key(id);
+
+
+CREATE TABLE grade
+(
+   gradeKey varchar2(2) NOT NULL,
+   gradeName varchar2(10)
+);
+alter table grade
+add constraint grade_gradeKey_PK primary key(gradeKey);
+
+
+
+CREATE TABLE board_type
+(
+   boardId number(2,0) NOT NULL,
+   boardName varchar2(20) NOT NULL
+);
+alter table board_type
+add constraint board_type_boardId_PK primary key(boardId);
+
+
+
+CREATE TABLE common_board
+(
+   bno number(10,0) NOT NULL,
+   boardId number(2,0),
+   title varchar2(200) NOT NULL,
+   writer varchar2(30) NOT NULL,
+   regdate date DEFAULT SYSDATE,
+   viewcnt number DEFAULT 0,
+   replycnt number DEFAULT 0,
+   uuid varchar2(100) NOT NULL,
+   uploadpath varchar2(200) NOT NULL,
+   filename varchar2(100) NOT NULL
+);
+alter table common_board
+add constraint common_board_bno_PK primary key(bno);
+alter table common_board
+add constraint common_board_boardId_FK foreign key(boardId) REFERENCES board_type(boardId);
+
+CREATE TABLE store_board
+(
+   bno number(10,0) NOT NULL,
+   productId varchar2(10) NOT NULL UNIQUE,
+   boardId number(2,0) NOT NULL,
+   category varchar2(30),
+   price number NOT NULL,
+   shippingFee number DEFAULT 0,
+   content varchar2(4000) NOT NULL
+);
+alter table store_board
+add constraint store_board_bno_FK foreign key(bno) REFERENCES common_board(bno);
+alter table store_board
+add constraint store_board_bno_PK primary key(bno);
+
+CREATE TABLE recipe_board
+(
+   bno number(10,0) NOT NULL,
+   boardId number(2,0),
+   infotext varchar2(500),
+   category varchar2(30) NOT NULL,
+   serving varchar2(30) NOT NULL,
+   difficulty varchar2(30) NOT NULL,
+   cookingtime varchar2(30) NOT NULL,
+   heartcnt number DEFAULT 0
+);
+alter table recipe_board
+add constraint recipe_board_bno_FK foreign key(bno) REFERENCES common_board(bno);
+alter table recipe_board
+add constraint recipe_board_bno_PK primary key(bno);
+
+
+CREATE TABLE cookingtip_board
+(
+   bno number(10,0) NOT NULL,
+   boardId number(2,0),
+   category varchar2(30) NOT NULL,
+   content varchar2(4000) NOT NULL
+);
+alter table cookingtip_board
+add constraint cookingtip_board_bno_FK foreign key(bno) REFERENCES common_board(bno);
+alter table cookingtip_board
+add constraint cookingtip_board_bno_PK primary key(bno);
+
+CREATE TABLE event_board
+(
+   bno number(10,0) NOT NULL,
+   boardId number(2,0),
+   startdate date NOT NULL,
+   enddate date NOT NULL,
+   content varchar2(4000) NOT NULL
+);
+alter table event_board
+add constraint event_board_bno_FK foreign key(bno) REFERENCES common_board(bno);
+alter table event_board
+add constraint event_board_bno_PK primary key(bno);
+
+
+CREATE TABLE ingredient
+(
+   ingredientId number NOT NULL,
+   ingredientOrder number(2,0) NOT NULL,
+   bno number(10,0) NOT NULL,
+   name varchar2(50) NOT NULL,
+   measurement varchar2(50) NOT NULL
+);
+alter table ingredient
+add constraint ingredient_bno_FK foreign key(bno) REFERENCES recipe_board(bno);
+alter table ingredient
+add constraint ingredient_ingredientId_PK primary key(ingredientId);
+
+
+CREATE TABLE recipe_step
+(
+   stepId number NOT NULL,
+   stepOrder number(2,0),
+   bno number(10,0) NOT NULL,
+   instruction varchar2(200),
+   uuid varchar2(100) NOT NULL,
+   uploadpath varchar2(200) NOT NULL,
+   filename varchar2(100) NOT NULL
+);
+alter table recipe_step
+add constraint recipe_step_bno_FK foreign key(bno) REFERENCES recipe_board(bno);
+alter table recipe_step
+add constraint recipe_step_stepId_PK primary key(stepId);
+
+
+
+CREATE TABLE reply
+(
+   rno number(10,0) NOT NULL,
+   bno number(10,0) NOT NULL,
+   replytext varchar2(1000) NOT NULL,
+   replyer varchar2(30) NOT NULL,
+   regdate date DEFAULT SYSDATE
+);
+alter table reply
+add constraint reply_bno_FK foreign key(bno) REFERENCES common_board(bno);
+alter table reply
+add constraint reply_rno_PK primary key(rno);
+
+
+
+
+CREATE TABLE cart
+(
+   cartId number(10,0) NOT NULL,
+   userId varchar2(40) NOT NULL,
+   productId varchar2(10),
+   quantity  number(10,0) NOT NULL
+);
+alter table cart
+add constraint cart_userId_FK foreign key(userId) REFERENCES member(id);
+alter table cart
+add constraint cart_productId_FK foreign key(productId) REFERENCES store_board(productId);
+alter table cart
+add constraint cart_cartId_PK primary key(cartId);
+
+CREATE TABLE heart
+(
+   heartId number(10,0) NOT NULL,
+   userId varchar2(40) NOT NULL,
+   bno number(10,0) NOT NULL
+);
+alter table heart
+add constraint heart_userId_FK foreign key(userId) REFERENCES member(id);
+alter table heart
+add constraint heart_bno_FK foreign key(bno) REFERENCES recipe_board(bno);
+alter table heart
+add constraint heart_heartId_PK primary key(heartId);
+
+
+/* 시퀀스 */
+create sequence common_board_seq
+increment by 1
+start with 1
+nomaxvalue;
+
+create sequence common_reply_seq
+increment by 1
+start with 1
+nomaxvalue;
+
+create sequence productId_seq
+increment by 1
+start with 1
+nomaxvalue;
