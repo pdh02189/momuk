@@ -6,7 +6,6 @@ import lombok.Data;
 public class StoreBoardDTO {
 	private int bno;
 	private String productId;
-	private int boardId;
 	private String category;
 	private int price;
 	private int shippingFee;
