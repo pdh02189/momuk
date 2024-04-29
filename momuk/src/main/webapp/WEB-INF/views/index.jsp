@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<link rel="stylesheet" href="${ctx}/resources/css/home.css">
 <%@ include file="include/header.jsp" %>
+<link rel="stylesheet" href="${ctx}/resources/css/home.css">
             <!-- 스토어 BEST -->
             <div class="store_best">
                 <div class="main_inner">

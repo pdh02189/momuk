@@ -24,11 +24,16 @@ public class CookingtipController {
 	private ICookingtipBoardService cookingtipService;
 	
 	// 등록
-	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	@RequestMapping(value = "/write", method = RequestMethod.GET)
+	public void registerGET() throws Exception {
+		log.info("write get........................");
+	}
+	
+	@RequestMapping(value = "/write", method = RequestMethod.POST)
 	public String addCookingtip(@ModelAttribute("commonBoard") CommonBoardDTO commonBoard,
             					@ModelAttribute("cookingTip") CookingtipBoardDTO cookingTip,
             					Model model) {
-		log.info("register.....................");
+		log.info("write post.....................");
 		
 		cookingtipService.insertCookingTipBoard(commonBoard, cookingTip);
 		

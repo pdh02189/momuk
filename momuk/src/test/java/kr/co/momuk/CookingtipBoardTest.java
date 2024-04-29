@@ -33,7 +33,7 @@ public class CookingtipBoardTest {
 	// 등록 테스트
 //	@Test
 //	public void testCookingtipInsert() throws Exception {
-//	    String resultPage = mockMvc.perform(MockMvcRequestBuilders.post("/cookingtip/register")
+//	    String resultPage = mockMvc.perform(MockMvcRequestBuilders.post("/cookingtip/write")
 //	            .param("title", "임시데이터 넣기")
 //	            .param("writer", "test02")
 //	    		.param("uuid", "test_uuid")
