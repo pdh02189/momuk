@@ -9,10 +9,38 @@
         VALUES (common_board_seq.currval, #{category}, #{content})
 	</insert>
 	
+	<select id="selectCookingtipByBno" resultType="kr.co.momuk.domain.DetailDTO">
+	    SELECT cb.bno, cb.title, cb.writer, cb.regdate, cb.viewcnt, cb.replycnt, ct.category, ct.content
+	    FROM common_board cb
+	    JOIN cookingtip_board ct ON cb.bno = ct.bno
+	    WHERE cb.bno = #{bno}
+	</select>
+	
 	<update id="updateCookingtip">
 		UPDATE cookingtip_board
 		SET	category = #{category}, content = #{content}
 		WHERE bno = #{bno}
 	</update>
+	
+	<delete id="deleteCookingtip">
+    	DELETE
+		FROM cookingtip_board
+		WHERE bno = #{bno}
+    </delete>
+    
+    <select id="selectAllCookingtip" resultType="kr.co.momuk.domain.CommonBoardDTO">
+    	<![CDATA[
+			SELECT	bno,
+					title,
+					writer,
+					regdate,
+					viewcnt,
+					replycnt
+			FROM	common_board	
+			WHERE	bno > 0
+			AND		boardId = 3
+			ORDER BY bno DESC, regdate DESC
+		]]>
+    </select>
 	
 </mapper>

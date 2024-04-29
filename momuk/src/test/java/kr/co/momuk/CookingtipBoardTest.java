@@ -34,31 +34,61 @@ public class CookingtipBoardTest {
 //	@Test
 //	public void testCookingtipInsert() throws Exception {
 //	    String resultPage = mockMvc.perform(MockMvcRequestBuilders.post("/cookingtip/register")
-//	            .param("title", "이거 지워도 들어가나?")
-//	            .param("writer", "test03")
+//	            .param("title", "임시데이터 넣기")
+//	            .param("writer", "test02")
 //	    		.param("uuid", "test_uuid")
 //	    		.param("uploadpath", "test_uploadpath")
 //	    		.param("filename", "test_filename")
 //	    		.param("category", "카테고리02")
-//	    		.param("content", "가라 피카츄!!"))
+//	    		.param("content", "드디어 ㅠㅠㅠㅠ"))
 //	            .andReturn().getModelAndView().getViewName();
 //
 //	    log.info("resultpage : " + resultPage);
 //	}
-//	
+	
+	//상세 테스트
+//	@Test
+//	public void testCookingDetail() throws Exception {
+//		String resultPage = mockMvc.perform(MockMvcRequestBuilders.get("/cookingtip/detail")
+//				.param("bno", "1"))
+//				.andReturn().getModelAndView().getViewName();
+//		
+//		log.info("resultpage : " + resultPage);
+//	}
+	
 	// 수정 테스트
-	@Test
-	public void testCookingtipUpdate() throws Exception {
-		String resultPage =  mockMvc.perform(MockMvcRequestBuilders.post("/cookingtip/modify")
-				.param("bno", "1")
-	            .param("title", "제목수정합니다")
-	    		.param("uuid", "modify_uuid")
-	    		.param("uploadpath", "modify_uploadpath")
-	    		.param("filename", "modify_filename")
-	    		.param("category", "카테고리수정")
-	    		.param("content", "내용도 수정을할것이다!"))
-	            .andReturn().getModelAndView().getViewName();
-
-	    log.info("resultpage : " + resultPage);
-	}
+//	@Test
+//	public void testCookingtipUpdate() throws Exception {
+//		String resultPage =  mockMvc.perform(MockMvcRequestBuilders.post("/cookingtip/modify")
+//				.param("bno", "3")
+//	            .param("title", "제목수정합니다")
+//	    		.param("uuid", "modify_uuid")
+//	    		.param("uploadpath", "modify_uploadpath")
+//	    		.param("filename", "modify_filename")
+//	    		.param("category", "카테고리수정")
+//	    		.param("content", "내용도 수정을할것이다!"))
+//	            .andReturn().getModelAndView().getViewName();
+//
+//	    log.info("resultpage : " + resultPage);
+//	    
+//	}
+	
+	// 삭제 테스트
+//	@Test
+//	public void testCookingtipDelete() throws Exception {
+//		String resultPage = mockMvc.perform(MockMvcRequestBuilders.post("/cookingtip/remove")
+//				.param("bno", "1"))
+//				.andReturn().getModelAndView().getViewName();
+//		
+//		log.info("resultpage : " + resultPage);
+//	}
+	
+	// 목록 전체 조회 테스트
+//	@Test
+//	public void testCookingtipAllList() throws Exception {
+//		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/cookingtip/list"))
+//				.andReturn()
+//				.getModelAndView()
+//				.getModelMap());
+//	}
 }

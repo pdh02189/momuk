@@ -3,14 +3,15 @@ package kr.co.momuk.mapper;
 import java.util.List;
 
 import kr.co.momuk.domain.CookingtipBoardDTO;
+import kr.co.momuk.domain.DetailDTO;
 
 public interface CookingtipBoardMapper {
 	
 	 public void insertCookingtip(CookingtipBoardDTO cookingTip);	 
-	 public CookingtipBoardDTO selectCookingtipById(int bno);
-	 public void updateCookingtip(CookingtipBoardDTO cookingTip);
-	 public void deleteCookingtip(int bno);
+	 public DetailDTO selectCookingtipByBno(int bno);
+	 public int updateCookingtip(CookingtipBoardDTO cookingTip);
+	 public int deleteCookingtip(int bno);
 	 
-	 public List<CookingtipBoardDTO> selectAllCookingtip();
+	 public List<DetailDTO> selectAllCookingtip();
 	 
 }

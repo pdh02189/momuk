@@ -8,9 +8,27 @@
         VALUES (common_board_seq.nextval, #{boardId}, #{title}, #{writer}, #{uuid}, #{uploadpath}, #{filename})
     </insert>
     
+    <!-- <select id="selectCommonBoardByBno" resultType="kr.co.momuk.domain.CommonBoardDTO">
+    	SELECT title, writer, regdate, viewcnt, replycnt
+    	FROM common_board
+    	WHERE bno = #{bno}
+    </select> -->
+    
     <update id="updateCommonBoard">
     	UPDATE common_board
     	SET title = #{title}, uuid = #{uuid}, uploadpath = #{uploadpath}, filename = #{filename}
     	WHERE bno = #{bno}
     </update>
+    
+    <delete id="deleteCommonBoard">
+    	DELETE
+		FROM common_board
+		WHERE bno = #{bno}
+    </delete>
+    
+    <update id="updateViewCnt">
+	    UPDATE common_board
+	    SET	viewcnt = viewcnt + 1
+	    WHERE bno = #{bno}
+	</update>
 </mapper>
