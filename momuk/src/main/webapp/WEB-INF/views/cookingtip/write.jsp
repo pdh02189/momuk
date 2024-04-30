@@ -4,6 +4,90 @@
 <script src="${ctx}/resources/js/writeform.js"></script>
 <script src="${ctx}/resources/summernote/summernote-lite.js"></script>
 <script src="${ctx}/resources/summernote/summernote-ko-KR.js"></script>
+<script>
+$(document).ready(function() {
+	var formObj = $("form[role='form']");
+	
+	$("button[type='submit']").on("click", function(e){
+		e.preventDefault();
+		    
+		console.log("submit clicked");
+		    
+		formObj.submit();
+	});
+		  
+	var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
+	var maxSize = 5242880; //5MB
+		  
+	function checkExtension(fileName, fileSize) {
+		if(fileSize >= maxSize) {
+			alert("파일 사이즈 초과");
+			return false;
+		}
+		    
+		if(regex.test(fileName)) {
+			alert("해당 종류의 파일은 업로드할 수 없습니다.");
+			return false;
+		}
+		
+		return true;
+	}
+	
+	$("input[type='file']").change(function(e){
+
+		var formData = new FormData();
+		    
+		var inputFile = $("input[name='uploadFile']");
+		    
+		var files = inputFile[0].files;
+		    
+		// 이미지가 선택되지 않았을 경우 경고 메시지 표시
+		if (files.length === 0) {
+		    alert("이미지를 선택해주세요.");
+		    return false;
+		}
+
+		// 첫 번째 이미지만 formData에 추가
+		var firstFile = files[0];
+		if (!checkExtension(firstFile.name, firstFile.size)) {
+		    return false;
+		}
+		formData.append("uploadFile", firstFile);
+
+		    
+		$.ajax({
+			url: "${contextPath}/uploadAjaxAction",
+			processData: false, 
+			contentType: false,
+			data: formData,
+			type: "POST",
+			dataType:"json",
+			success: function(result){
+				console.log(result); 
+			}
+		}); //$.ajax
+	});  
+
+	$(".thumb").on("click", "button", function(e) {
+		    
+		console.log("delete file");
+		      
+		var targetFile = $(this).data("file");
+		var type = $(this).data("type");
+		    
+		$.ajax({
+			url: "${contextPath}/deleteFile",
+			data: {fileName: targetFile, type:type},
+			dataType:"text",
+			type: "POST",
+			success: function(result){
+				alert(result);
+		           			}
+		}); //$.ajax
+	});
+
+});
+</script>
             <div class="main_content">
                 <div class="sub_nav">
                     <a href="../index.html" class="font_gray">홈</a>
@@ -13,7 +97,7 @@
                     <h3>요리꿀팁 작성</h3>
                 </div>
                 <div class="write_box">
-                    <form action="${contextPath}/board/register" method="post">
+                    <form role="form" action="${contextPath}/cookingtip/write" method="post" enctype="multipart/form-data">
                         <div class="write_tit">
                             <p>표시는 반드시 입력하셔야 합니다.</p>
                         </div>

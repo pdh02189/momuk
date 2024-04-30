@@ -31,19 +31,31 @@ $(document).ready(function() {
         // focus는 작성 페이지 접속시 에디터에 커서를 위치하도록 하려면 설정해주세요.
         focus : true,
         // callbacks은 이미지 업로드 처리입니다.
-        callbacks: {	//여기 부분이 이미지를 첨부하는 부분
-                    onImageUpload : function(files) {
-                        uploadSummernoteImageFile(files[0],this);
-                    },
-                    onPaste: function (e) {
-                        var clipboardData = e.originalEvent.clipboardData;
-                        if (clipboardData && clipboardData.items && clipboardData.items.length) {
-                            var item = clipboardData.items[0];
-                            if (item.kind === 'file' && item.type.indexOf('image/') !== -1) {
-                                e.preventDefault();
-                            }
-                        }
-                    }
-                }
-    });
+		callbacks : { 
+            	onImageUpload : function(files, editor, welEditable) {
+            // 파일 업로드(다중업로드를 위해 반복문 사용)
+            for (var i = files.length - 1; i >= 0; i--) {
+            uploadSummernoteImageFile(files[i],
+            this);
+            		}
+            	}
+            }
+         
+    });    
+    
 });
+function uploadSummernoteImageFile(file, el) {
+			data = new FormData();
+			data.append("file", file);
+			$.ajax({
+				data : data,
+				type : "POST",
+				url : "/uploadSummernoteImageFile",
+				contentType : false,
+				enctype : 'multipart/form-data',
+				processData : false,
+				success : function(data) {
+					$(el).summernote('editor.insertImage', data.url);
+				}
+			});
+		}

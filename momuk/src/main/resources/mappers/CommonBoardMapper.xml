@@ -5,7 +5,7 @@
 
 	<insert id="insertCommonBoard">
         INSERT INTO common_board (bno, boardId, title, writer, uuid, uploadpath, filename)
-        VALUES (common_board_seq.nextval, #{boardId}, #{title}, #{writer}, #{uuid}, #{uploadpath}, #{filename})
+        VALUES (common_board_seq.nextval, #{boardId}, #{title}, null, #{uuid}, #{uploadpath}, #{filename})
     </insert>
     
     <!-- <select id="selectCommonBoardByBno" resultType="kr.co.momuk.domain.CommonBoardDTO">
