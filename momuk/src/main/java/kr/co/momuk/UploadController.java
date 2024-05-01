@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpSession;
@@ -28,6 +29,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -42,7 +45,7 @@ import net.coobird.thumbnailator.Thumbnails;
 public class UploadController {
 	
 	private String uploadPath
-		= "C:\\Users\\hanul\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\fileUpload";
+		= "C:\\Users\\pdh02\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\fileUpload";
 	
 	public void uploadForm() {
 		log.info("upload form..........................");
@@ -238,64 +241,58 @@ public class UploadController {
 		}
 		return new ResponseEntity<>("deleted", headers, HttpStatus.OK);
 	}
-//	@PostMapping("/deleteFile")
-//	@ResponseBody
-//	public ResponseEntity<String> deleteFile(String fileName, String type) {
-//	    log.info("deleteFile : " + fileName);
-//	    
-//	    HttpHeaders headers = new HttpHeaders();
-//	    headers.add("Content-type", "text/html; charset=UTF-8");
-//	    
-//	    // 파일 이름이 null이면 에러를 반환
-//	    if (fileName == null) {
-//	        log.error("File name is null");
-//	        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//	    }
-//	    
-//	    File file;
-//	    
-//	    try {
-//	        // 파일 이름을 UTF-8로 디코딩하여 파일 객체 생성
-//	        file = new File(uploadPath + File.separator + URLDecoder.decode(fileName, "UTF-8"));
-//	        
-//	        // 파일 삭제
-//	        boolean deleted = file.delete();
-//	        
-//	        if (!deleted) {
-//	            log.error("Failed to delete file: " + fileName);
-//	            return new ResponseEntity<>("Failed to delete file", headers, HttpStatus.INTERNAL_SERVER_ERROR);
-//	        }
-//	        
-//	        // 이미지 타입인 경우 썸네일 파일도 삭제
-//	        if (type.equals("image")) {
-//	            String thumbnailFileName = file.getAbsolutePath().replace("s_", "");
-//	            File thumbnailFile = new File(thumbnailFileName);
-//	            if (!thumbnailFile.delete()) {
-//	                log.error("Failed to delete thumbnail file: " + thumbnailFileName);
-//	                // 에러 처리 필요
-//	            }
-//	        }
-//	    } catch (UnsupportedEncodingException e) {
-//	        e.printStackTrace();
-//	        return new ResponseEntity<>("UnsupportedEncodingException: " + e.getMessage(), headers, HttpStatus.INTERNAL_SERVER_ERROR);
-//	    }
-//	    
-//	    return new ResponseEntity<>("deleted", headers, HttpStatus.OK);
-//	}
+
 	
-	// 썸머노트 사진 저장
-	@RequestMapping(value="/uploadSummernoteImageFile", produces = "application/json; charset=utf8")
+
+
+    private final WebApplicationContext context;
+    
+    public UploadController(ServletContext servletContext) {
+        this.context = WebApplicationContextUtils.getWebApplicationContext(servletContext);
+    }
+    
+//    @PostMapping(value = "/uploadSummernoteImageFile")
+//    // @RequestParam은 자바스크립트에서 설정한 이름과 반드시 같아야합니다.
+//    public ResponseEntity<?> uploadSummernoteImageFile(@RequestParam("file") MultipartFile file) throws IllegalStateException, IOException {
+//    	try {
+//    		// 서버에 저장할 경로
+////    		String uploadDirectory = context.getServletContext().getRealPath("/resources/assets/images/upload"); 
+//    		String uploadDirectory = "C:\\Users\\pdh02\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\assets\\images\\upload"; 
+//    		
+//    		// 업로드 된 파일의 이름
+//    		String originalFileName = file.getOriginalFilename();
+//    		
+//    		// 업로드 된 파일의 확장자
+//    		String fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
+//    		
+//    		// 업로드 될 파일의 이름 재설정 (중복 방지를 위해 UUID 사용)
+//    		String uuidFileName = UUID.randomUUID().toString() + fileExtension;
+//    		
+//    		// 위에서 설정한 서버 경로에 이미지 저장
+//    		file.transferTo(new File(uploadDirectory, uuidFileName));
+//    		
+//    		System.out.println("************************ 업로드 컨트롤러 실행 ************************");
+//    		System.out.println(uploadDirectory);
+//    		
+//    		// Ajax에서 업로드 된 파일의 이름을 응답 받을 수 있도록 해줍니다.
+//    		return ResponseEntity.ok(uuidFileName);
+//    	} catch (Exception e) {
+//    		return ResponseEntity.badRequest().body("이미지 업로드 실패");
+//    	}
+//    	
+//    }
+    @RequestMapping(value="/uploadSummernoteImageFile", produces = "application/json; charset=utf8")
 	@ResponseBody
 	public String uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request )  {
 		JsonObject jsonObject = new JsonObject();
 		
-        /*
-		 * String fileRoot = "C:\\summernote_image\\"; // 외부경로로 저장을 희망할때.
-		 */
+        
+		//String fileRoot = "C:\\Users\\pdh02\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\assets\\images\\upload\\"; // 외부경로로 저장을 희망할때.
+		 
 		
 		// 내부경로로 저장
 		String contextRoot = new HttpServletRequestWrapper(request).getRealPath("/");
-		String fileRoot = contextRoot+"resources/fileupload/";
+		String fileRoot = contextRoot+"/resources/assets/images/upload/";
 		
 		String originalFileName = multipartFile.getOriginalFilename();	//오리지날 파일명
 		String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
@@ -305,7 +302,7 @@ public class UploadController {
 		try {
 			InputStream fileStream = multipartFile.getInputStream();
 			FileUtils.copyInputStreamToFile(fileStream, targetFile);	//파일 저장
-			jsonObject.addProperty("url", "/summernote/resources/fileupload/"+savedFileName); // contextroot + resources + 저장할 내부 폴더명
+			jsonObject.addProperty("url", "/resources/assets/images/upload/"+savedFileName); // contextroot + resources + 저장할 내부 폴더명
 			jsonObject.addProperty("responseCode", "success");
 				
 		} catch (IOException e) {
@@ -316,4 +313,7 @@ public class UploadController {
 		String a = jsonObject.toString();
 		return a;
 	}
+
+    
+
 }
