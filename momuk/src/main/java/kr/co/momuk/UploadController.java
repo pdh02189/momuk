@@ -251,69 +251,35 @@ public class UploadController {
         this.context = WebApplicationContextUtils.getWebApplicationContext(servletContext);
     }
     
-//    @PostMapping(value = "/uploadSummernoteImageFile")
-//    // @RequestParam은 자바스크립트에서 설정한 이름과 반드시 같아야합니다.
-//    public ResponseEntity<?> uploadSummernoteImageFile(@RequestParam("file") MultipartFile file) throws IllegalStateException, IOException {
-//    	try {
-//    		// 서버에 저장할 경로
-////    		String uploadDirectory = context.getServletContext().getRealPath("/resources/assets/images/upload"); 
+    @PostMapping(value = "/uploadSummernoteImageFile")
+    // @RequestParam은 자바스크립트에서 설정한 이름과 반드시 같아야합니다.
+    public ResponseEntity<?> uploadSummernoteImageFile(@RequestParam("file") MultipartFile file) throws IllegalStateException, IOException {
+    	try {
+    		// 서버에 저장할 경로
+    		String uploadDirectory = context.getServletContext().getRealPath("/resources/assets/images/upload"); 
 //    		String uploadDirectory = "C:\\Users\\pdh02\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\assets\\images\\upload"; 
-//    		
-//    		// 업로드 된 파일의 이름
-//    		String originalFileName = file.getOriginalFilename();
-//    		
-//    		// 업로드 된 파일의 확장자
-//    		String fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
-//    		
-//    		// 업로드 될 파일의 이름 재설정 (중복 방지를 위해 UUID 사용)
-//    		String uuidFileName = UUID.randomUUID().toString() + fileExtension;
-//    		
-//    		// 위에서 설정한 서버 경로에 이미지 저장
-//    		file.transferTo(new File(uploadDirectory, uuidFileName));
-//    		
-//    		System.out.println("************************ 업로드 컨트롤러 실행 ************************");
-//    		System.out.println(uploadDirectory);
-//    		
-//    		// Ajax에서 업로드 된 파일의 이름을 응답 받을 수 있도록 해줍니다.
-//    		return ResponseEntity.ok(uuidFileName);
-//    	} catch (Exception e) {
-//    		return ResponseEntity.badRequest().body("이미지 업로드 실패");
-//    	}
-//    	
-//    }
-    @RequestMapping(value="/uploadSummernoteImageFile", produces = "application/json; charset=utf8")
-	@ResponseBody
-	public String uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request )  {
-		JsonObject jsonObject = new JsonObject();
-		
-        
-		//String fileRoot = "C:\\Users\\pdh02\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\assets\\images\\upload\\"; // 외부경로로 저장을 희망할때.
-		 
-		
-		// 내부경로로 저장
-		String contextRoot = new HttpServletRequestWrapper(request).getRealPath("/");
-		String fileRoot = contextRoot+"/resources/assets/images/upload/";
-		
-		String originalFileName = multipartFile.getOriginalFilename();	//오리지날 파일명
-		String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
-		String savedFileName = UUID.randomUUID() + extension;	//저장될 파일 명
-		
-		File targetFile = new File(fileRoot + savedFileName);	
-		try {
-			InputStream fileStream = multipartFile.getInputStream();
-			FileUtils.copyInputStreamToFile(fileStream, targetFile);	//파일 저장
-			jsonObject.addProperty("url", "/resources/assets/images/upload/"+savedFileName); // contextroot + resources + 저장할 내부 폴더명
-			jsonObject.addProperty("responseCode", "success");
-				
-		} catch (IOException e) {
-			FileUtils.deleteQuietly(targetFile);	//저장된 파일 삭제
-			jsonObject.addProperty("responseCode", "error");
-			e.printStackTrace();
-		}
-		String a = jsonObject.toString();
-		return a;
-	}
-
+    		
+    		// 업로드 된 파일의 이름
+    		String originalFileName = file.getOriginalFilename();
+    		
+    		// 업로드 된 파일의 확장자
+    		String fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
+    		
+    		// 업로드 될 파일의 이름 재설정 (중복 방지를 위해 UUID 사용)
+    		String uuidFileName = UUID.randomUUID().toString() + fileExtension;
+    		
+    		// 위에서 설정한 서버 경로에 이미지 저장
+    		file.transferTo(new File(uploadDirectory, uuidFileName));
+    		
+    		System.out.println("************************ 업로드 컨트롤러 실행 ************************");
+    		System.out.println(uploadDirectory);
+    		
+    		// Ajax에서 업로드 된 파일의 이름을 응답 받을 수 있도록 해줍니다.
+    		return ResponseEntity.ok(uuidFileName);
+    	} catch (Exception e) {
+    		return ResponseEntity.badRequest().body("이미지 업로드 실패");
+    	}
+    	
+    }
     
-
 }

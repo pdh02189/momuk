@@ -122,28 +122,30 @@ $(document).ready(function() {
 	    // focus는 작성 페이지 접속시 에디터에 커서를 위치하도록 하려면 설정해주세요.
 	    focus : true,
 		 // callbacks은 이미지 업로드 처리입니다.
-		callbacks : { 
-            	onImageUpload : function(files, editor, welEditable) {
-            // 파일 업로드(다중업로드를 위해 반복문 사용)
-            for (var i = files.length - 1; i >= 0; i--) {
-            uploadSummernoteImageFile(files[i],
-            this);
-            		}
-            	}
-            }
+		callbacks : {                                                    
+			onImageUpload : function(files, editor, welEditable) {   
+                // 다중 이미지 처리를 위해 for문을 사용했습니다.
+				for (var i = 0; i < files.length; i++) {
+					imageUploader(files[i], this);
+				}
+			}
+		}
 	});
-	function uploadSummernoteImageFile(file, el) {
-		data = new FormData();
-		data.append("file", file);
-		$.ajax({
-			data : data,
+	function imageUploader(file, el) {
+		var formData = new FormData();
+		formData.append('file', file);
+	  
+		$.ajax({                                                              
+			data : formData,
 			type : "POST",
-			url : "${ctx}/uploadSummernoteImageFile",
+	        // url은 자신의 이미지 업로드 처리 컨트롤러 경로로 설정해주세요.
+			url : '${ctx}/uploadSummernoteImageFile',  
 			contentType : false,
-			enctype : 'multipart/form-data',
 			processData : false,
-			success : function(data) {
-				$(el).summernote('editor.insertImage', data.url);
+			enctype : 'multipart/form-data',                                  
+			success : function(data) {   
+				$(el).summernote('insertImage', "${ctx}/resources/assets/images/upload/"+data);
+				console.log(data);
 			}
 		});
 	}
