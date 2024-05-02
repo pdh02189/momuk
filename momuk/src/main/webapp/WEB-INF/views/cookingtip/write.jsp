@@ -144,8 +144,10 @@ $(document).ready(function() {
 			processData : false,
 			enctype : 'multipart/form-data',                                  
 			success : function(data) {   
+				setTimeout(function() {
 				$(el).summernote('insertImage', "${ctx}/resources/assets/images/upload/"+data);
 				console.log(data);
+				}, 3000);
 			}
 		});
 	}

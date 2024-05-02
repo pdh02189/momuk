@@ -10,7 +10,7 @@
 	</insert>
 	
 	<select id="selectCookingtipByBno" resultType="kr.co.momuk.domain.DetailDTO">
-	    SELECT cb.bno, cb.title, cb.writer, cb.regdate, cb.viewcnt, cb.replycnt, ct.category, ct.content
+	    SELECT cb.bno, cb.title AS title, cb.writer AS writer, cb.regdate, cb.viewcnt, cb.replycnt, ct.category, ct.content
 	    FROM common_board cb
 	    JOIN cookingtip_board ct ON cb.bno = ct.bno
 	    WHERE cb.bno = #{bno}
@@ -35,7 +35,10 @@
 					writer,
 					regdate,
 					viewcnt,
-					replycnt
+					replycnt,
+					uuid,
+					uploadpath,
+					filename
 			FROM	common_board	
 			WHERE	bno > 0
 			AND		boardId = 3

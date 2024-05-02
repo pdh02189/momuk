@@ -7,7 +7,7 @@
                 </div>
                 <div class="sub_tit">
                     <h3>요리 꿀팁</h3>
-                    <button type="button" class="btn_write btn_red" onclick="location.href='write.html'"><span>꿀팁 작성</span></button>
+                    <button type="button" class="btn_write btn_red"><span>꿀팁 작성</span></button>
                 </div>
                 <div class="comm_list_top">
                     <ul class="list_category nowrap">
@@ -77,222 +77,26 @@
                     </div>
                 </div>
                 <ul class="comm_list">
-                    <li>
-                        <a href="../cookingtip/detail.html">
-                            <div class="list_img">
-                                <img src="${ctx}/resources/images/tip_test_img01.jpg" alt="레시피 대표 이미지">
-                            </div>
-                            <div class="list_txt">
-                                <p class="list_tit txt_cut2">애호박 비닐 쉽게 벗기는 법</p>
-                                <div class="list_info">
-                                    <span class="name">요리조아</span>
-                                    <span class="date font_gray">2024.03.23</span>
-                                </div>
-                                <div class="list_ic">
-                                    <span class="view font_gray">24</span>
-                                    <span class="comment font_gray">2</span>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="../cookingtip/detail.html">
-                            <div class="list_img">
-                                <img src="${ctx}/resources/images/tip_test_img02.jpg" alt="레시피 대표 이미지">
-                            </div>
-                            <div class="list_txt">
-                                <p class="list_tit txt_cut2">옥수수 알맹이 예쁘게 써는 법</p>
-                                <div class="list_info">
-                                    <span class="name">요리조아</span>
-                                    <span class="date font_gray">2024.03.23</span>
-                                </div>
-                                <div class="list_ic">
-                                    <span class="view font_gray">24</span>
-                                    <span class="comment font_gray">2</span>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="../cookingtip/detail.html">
-                            <div class="list_img">
-                                <img src="${ctx}/resources/images/tip_test_img03.jpg" alt="레시피 대표 이미지">
-                            </div>
-                            <div class="list_txt">
-                                <p class="list_tit txt_cut2">밥 맛있게 짓는 법</p>
-                                <div class="list_info">
-                                    <span class="name">요리조아</span>
-                                    <span class="date font_gray">2024.03.23</span>
-                                </div>
-                                <div class="list_ic">
-                                    <span class="view font_gray">24</span>
-                                    <span class="comment font_gray">2</span>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="../cookingtip/detail.html">
-                            <div class="list_img">
-                                <img src="${ctx}/resources/images/tip_test_img04.jpg" alt="레시피 대표 이미지">
-                            </div>
-                            <div class="list_txt">
-                                <p class="list_tit txt_cut2">칼에 버터 안 묻히고 소분하는 법</p>
-                                <div class="list_info">
-                                    <span class="name">요리조아</span>
-                                    <span class="date font_gray">2024.03.23</span>
-                                </div>
-                                <div class="list_ic">
-                                    <span class="view font_gray">24</span>
-                                    <span class="comment font_gray">2</span>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="../cookingtip/detail.html">
-                            <div class="list_img">
-                                <img src="${ctx}/resources/images/tip_test_img01.jpg" alt="레시피 대표 이미지">
-                            </div>
-                            <div class="list_txt">
-                                <p class="list_tit txt_cut2">애호박 비닐 쉽게 벗기는 법</p>
-                                <div class="list_info">
-                                    <span class="name">요리조아</span>
-                                    <span class="date font_gray">2024.03.23</span>
-                                </div>
-                                <div class="list_ic">
-                                    <span class="view font_gray">24</span>
-                                    <span class="comment font_gray">2</span>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="../cookingtip/detail.html">
-                            <div class="list_img">
-                                <img src="${ctx}/resources/images/tip_test_img02.jpg" alt="레시피 대표 이미지">
-                            </div>
-                            <div class="list_txt">
-                                <p class="list_tit txt_cut2">옥수수 알맹이 예쁘게 써는 법</p>
-                                <div class="list_info">
-                                    <span class="name">요리조아</span>
-                                    <span class="date font_gray">2024.03.23</span>
-                                </div>
-                                <div class="list_ic">
-                                    <span class="view font_gray">24</span>
-                                    <span class="comment font_gray">2</span>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="../cookingtip/detail.html">
-                            <div class="list_img">
-                                <img src="${ctx}/resources/images/tip_test_img03.jpg" alt="레시피 대표 이미지">
-                            </div>
-                            <div class="list_txt">
-                                <p class="list_tit txt_cut2">밥 맛있게 짓는 법</p>
-                                <div class="list_info">
-                                    <span class="name">요리조아</span>
-                                    <span class="date font_gray">2024.03.23</span>
-                                </div>
-                                <div class="list_ic">
-                                    <span class="view font_gray">24</span>
-                                    <span class="comment font_gray">2</span>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="../cookingtip/detail.html">
-                            <div class="list_img">
-                                <img src="${ctx}/resources/images/tip_test_img04.jpg" alt="레시피 대표 이미지">
-                            </div>
-                            <div class="list_txt">
-                                <p class="list_tit txt_cut2">칼에 버터 안 묻히고 소분하는 법</p>
-                                <div class="list_info">
-                                    <span class="name">요리조아</span>
-                                    <span class="date font_gray">2024.03.23</span>
-                                </div>
-                                <div class="list_ic">
-                                    <span class="view font_gray">24</span>
-                                    <span class="comment font_gray">2</span>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="../cookingtip/detail.html">
-                            <div class="list_img">
-                                <img src="${ctx}/resources/images/tip_test_img01.jpg" alt="레시피 대표 이미지">
-                            </div>
-                            <div class="list_txt">
-                                <p class="list_tit txt_cut2">애호박 비닐 쉽게 벗기는 법</p>
-                                <div class="list_info">
-                                    <span class="name">요리조아</span>
-                                    <span class="date font_gray">2024.03.23</span>
-                                </div>
-                                <div class="list_ic">
-                                    <span class="view font_gray">24</span>
-                                    <span class="comment font_gray">2</span>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="../cookingtip/detail.html">
-                            <div class="list_img">
-                                <img src="${ctx}/resources/images/tip_test_img02.jpg" alt="레시피 대표 이미지">
-                            </div>
-                            <div class="list_txt">
-                                <p class="list_tit txt_cut2">옥수수 알맹이 예쁘게 써는 법</p>
-                                <div class="list_info">
-                                    <span class="name">요리조아</span>
-                                    <span class="date font_gray">2024.03.23</span>
-                                </div>
-                                <div class="list_ic">
-                                    <span class="view font_gray">24</span>
-                                    <span class="comment font_gray">2</span>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="../cookingtip/detail.html">
-                            <div class="list_img">
-                                <img src="${ctx}/resources/images/tip_test_img03.jpg" alt="레시피 대표 이미지">
-                            </div>
-                            <div class="list_txt">
-                                <p class="list_tit txt_cut2">밥 맛있게 짓는 법</p>
-                                <div class="list_info">
-                                    <span class="name">요리조아</span>
-                                    <span class="date font_gray">2024.03.23</span>
-                                </div>
-                                <div class="list_ic">
-                                    <span class="view font_gray">24</span>
-                                    <span class="comment font_gray">2</span>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="../cookingtip/detail.html">
-                            <div class="list_img">
-                                <img src="${ctx}/resources/images/tip_test_img04.jpg" alt="레시피 대표 이미지">
-                            </div>
-                            <div class="list_txt">
-                                <p class="list_tit txt_cut2">칼에 버터 안 묻히고 소분하는 법</p>
-                                <div class="list_info">
-                                    <span class="name">요리조아</span>
-                                    <span class="date font_gray">2024.03.23</span>
-                                </div>
-                                <div class="list_ic">
-                                    <span class="view font_gray">24</span>
-                                    <span class="comment font_gray">2</span>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
+                	<c:forEach items="${list }" var="board">
+	                    <li>
+	                        <a href="${board.bno }">
+	                            <div class="list_img">
+	                                <img src="${ctx}/resources/fileUpload/${board.uploadpath}/${board.uuid}_${board.filename}" alt="레시피 대표 이미지">
+	                            </div>
+	                            <div class="list_txt">
+	                                <p class="list_tit txt_cut2">${board.title }</p>
+	                                <div class="list_info">
+	                                    <span class="name">${board.writer }</span>
+	                                    <span class="date font_gray"><fmt:formatDate pattern="yyyy.MM.dd HH:mm" value="${board.regdate }" /></span>
+	                                </div>
+	                                <div class="list_ic">
+	                                    <span class="view font_gray">${board.viewcnt }</span>
+	                                    <span class="comment font_gray">${board.replycnt }</span>
+	                                </div>
+	                            </div>
+	                        </a>
+	                    </li>
+                    </c:forEach>
                 </ul>
                 <div class="paging1">
                     <p>
@@ -308,4 +112,27 @@
                     </p>
                 </div>
             </div>
+            
+            <form id="actionForm" action="${ctx }/cookingtip/list" method="get">
+            	<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
+            	<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
+            	<input type="hidden" name="type" value="${pageMaker.cri.type }">
+         		<input type="hidden" name="keyword" value="${pageMaker.cri.keyword }">
+            </form>
+<script>
+$(function() {
+	$(".btn_write").on("click", function() {
+		self.location = "${ctx}/cookingtip/write";
+	});
+	
+	var actionForm = $("#actionForm");
+	$(".comm_list li a").on("click", function(e) {
+		e.preventDefault();
+		actionForm.append("<input type='hidden' name='bno' value='" + $(this).attr("href") + "'>");
+		actionForm.attr("action", "${ctx}/cookingtip/detail");
+		actionForm.submit();
+	});
+});
+</script>
+
 <%@ include file="../include/footer.jsp" %>

@@ -2,6 +2,9 @@ package kr.co.momuk.domain;
 
 import java.util.Date;
 
+import lombok.Data;
+
+@Data
 public class DetailDTO {
 	private int bno;
 	private String title;

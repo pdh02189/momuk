@@ -45,7 +45,8 @@ import net.coobird.thumbnailator.Thumbnails;
 public class UploadController {
 	
 	private String uploadPath
-		= "C:\\Users\\pdh02\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\fileUpload";
+//		= "C:\\Users\\pdh02\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\fileUpload";
+		= "C:\\Users\\hanul\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\fileUpload";
 	
 	public void uploadForm() {
 		log.info("upload form..........................");
@@ -186,7 +187,7 @@ public class UploadController {
 
 	            // UUID와 업로드 경로 설정
 	            attachFileDTO.setUuid(uuid.toString());
-	            attachFileDTO.setUploadpath(uploadFolderPath);
+	            attachFileDTO.setUploadpath(uploadFolderPath.replace("\\", "/"));
 
 	            if(checkImageType(saveFile)) {
 	                File thumbnail = new File(uploadFolder, "s_" + uploadFileName);
@@ -256,8 +257,9 @@ public class UploadController {
     public ResponseEntity<?> uploadSummernoteImageFile(@RequestParam("file") MultipartFile file) throws IllegalStateException, IOException {
     	try {
     		// 서버에 저장할 경로
-    		String uploadDirectory = context.getServletContext().getRealPath("/resources/assets/images/upload"); 
+//    		String uploadDirectory = context.getServletContext().getRealPath("/resources/assets/images/upload"); 
 //    		String uploadDirectory = "C:\\Users\\pdh02\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\assets\\images\\upload"; 
+    		String uploadDirectory = "C:\\Users\\hanul\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\assets\\images\\upload"; 
     		
     		// 업로드 된 파일의 이름
     		String originalFileName = file.getOriginalFilename();
