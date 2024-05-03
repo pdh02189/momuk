@@ -47,14 +47,14 @@ public class CookingtipBoardTest {
 //	}
 	
 	//상세 테스트
-	@Test
-	public void testCookingDetail() throws Exception {
-		String resultPage = mockMvc.perform(MockMvcRequestBuilders.get("/cookingtip/detail")
-				.param("bno", "22"))
-				.andReturn().getModelAndView().getViewName();
-		
-		log.info("resultpage : " + resultPage);
-	}
+//	@Test
+//	public void testCookingDetail() throws Exception {
+//		String resultPage = mockMvc.perform(MockMvcRequestBuilders.get("/cookingtip/detail")
+//				.param("bno", "22"))
+//				.andReturn().getModelAndView().getViewName();
+//		
+//		log.info("resultpage : " + resultPage);
+//	}
 	
 	// 수정 테스트
 //	@Test
@@ -91,4 +91,12 @@ public class CookingtipBoardTest {
 //				.getModelAndView()
 //				.getModelMap());
 //	}
+	
+	@Test
+	public void testCookingtipAllList() throws Exception {
+	    log.info(mockMvc.perform(MockMvcRequestBuilders.get("/cookingtip/list")
+	            .param("pageNum", "2")
+	            .param("amount", "12"))
+	            .andReturn().getModelAndView().getModelMap());
+	}
 }

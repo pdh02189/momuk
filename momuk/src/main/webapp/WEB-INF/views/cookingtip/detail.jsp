@@ -103,9 +103,21 @@
 <script>
 $(document).ready(function() {
 	var operForm = $("#operForm"); 
-		$(".btn_edit").on("click", function(e){
+	$(".btn_edit").on("click", function(e){
 	  	operForm.attr("action","${ctx}/cookingtip/modify").submit();
 	});
+	
+	$(".btn_del").on("click", function(e){
+	    e.preventDefault(); // 기본 동작 방지
+
+	    // 사용자에게 확인 메시지 표시
+	    if (confirm("정말로 삭제하시겠습니까?")) {
+	        // 확인을 선택한 경우
+	        operForm.attr("action", "${ctx}/cookingtip/remove").attr("method", "post").submit();
+	    } 
+	    // 취소를 선택한 경우는 아무 동작도 하지 않음
+	});
+
 	
 	$(".btn_back").on("click", function(e){
 		operForm.find("#bno").remove();

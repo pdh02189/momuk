@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.momuk.domain.CommonBoardDTO;
 import kr.co.momuk.domain.CookingtipBoardDTO;
+import kr.co.momuk.domain.Criteria;
 import kr.co.momuk.domain.DetailDTO;
 import kr.co.momuk.mapper.CommonBoardMapper;
 import kr.co.momuk.mapper.CookingtipBoardMapper;
@@ -67,8 +68,13 @@ public class CookingtipBoardServiceImpl implements ICookingtipBoardService{
 
 	// 요리꿀팁 목록 전체 조회
 	@Override
-	public List<DetailDTO> selectAllCookingtip() {
-		return cookingtipMapper.selectAllCookingtip();
+	public List<DetailDTO> selectAllCookingtip(Criteria cri) {
+		return cookingtipMapper.selectAllCookingtip(cri);
 	}
 	
+	// 게시물 수
+	@Override
+	public int getTotalCnt(Criteria cri){
+	    return cookingtipMapper.getTotalCnt(cri);
+	}
 }
