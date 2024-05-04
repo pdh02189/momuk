@@ -45,8 +45,8 @@ import net.coobird.thumbnailator.Thumbnails;
 public class UploadController {
 	
 	private String uploadPath
-//		= "C:\\Users\\pdh02\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\fileUpload";
-		= "C:\\Users\\hanul\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\fileUpload";
+		= "C:\\Users\\pdh02\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\fileUpload";
+//		= "C:\\Users\\hanul\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\fileUpload";
 	
 	public void uploadForm() {
 		log.info("upload form..........................");
@@ -246,11 +246,11 @@ public class UploadController {
 	
 
 
-    private final WebApplicationContext context;
-    
-    public UploadController(ServletContext servletContext) {
-        this.context = WebApplicationContextUtils.getWebApplicationContext(servletContext);
-    }
+//    private final WebApplicationContext context;
+//    
+//    public UploadController(ServletContext servletContext) {
+//        this.context = WebApplicationContextUtils.getWebApplicationContext(servletContext);
+//    }
     
     @PostMapping(value = "/uploadSummernoteImageFile")
     // @RequestParam은 자바스크립트에서 설정한 이름과 반드시 같아야합니다.
@@ -258,8 +258,8 @@ public class UploadController {
     	try {
     		// 서버에 저장할 경로
 //    		String uploadDirectory = context.getServletContext().getRealPath("/resources/assets/images/upload"); 
-//    		String uploadDirectory = "C:\\Users\\pdh02\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\assets\\images\\upload"; 
-    		String uploadDirectory = "C:\\Users\\hanul\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\assets\\images\\upload"; 
+    		String uploadDirectory = "C:\\Users\\pdh02\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\assets\\images\\upload"; 
+//    		String uploadDirectory = "C:\\Users\\hanul\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\assets\\images\\upload"; 
     		
     		// 업로드 된 파일의 이름
     		String originalFileName = file.getOriginalFilename();

@@ -15,4 +15,5 @@ public interface CookingtipBoardMapper {
 	 
 	 public List<DetailDTO> selectAllCookingtip(Criteria cri);
 	 public int getTotalCnt(Criteria cri);
+	 
 }

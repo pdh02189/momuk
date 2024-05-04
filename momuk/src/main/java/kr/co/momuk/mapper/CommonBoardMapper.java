@@ -12,5 +12,7 @@ public interface CommonBoardMapper {
 	public int deleteCommonBoard(int bno);
 	
 	public void updateViewCnt(int bno);
+	public void plusReplyCnt(int bno);
+	public void minusReplyCnt(int bno);
 	
 }

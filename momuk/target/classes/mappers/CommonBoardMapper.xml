@@ -31,4 +31,17 @@
 	    SET	viewcnt = viewcnt + 1
 	    WHERE bno = #{bno}
 	</update>
+	
+	<update id="plusReplyCnt">
+	    UPDATE common_board
+	    SET		replycnt = replycnt + 1
+	    WHERE bno = #{bno}
+	</update>
+	
+	<update id="minusReplyCnt">
+	    UPDATE common_board
+	    SET		replycnt = replycnt -1
+	    WHERE bno = #{bno}
+	</update>
+	
 </mapper>

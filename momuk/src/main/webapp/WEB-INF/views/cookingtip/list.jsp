@@ -112,7 +112,7 @@
 <!-- 	                        <span><a href="#" data-page="5">5</a></span> -->
                         </c:forEach>
                         <c:if test="${pageMaker.next }">
-                        	<span class="numPN  over right"><a href="${pageMaker.endPage + 1 }" data-page="11" title="다음 페이지로 이동하기"><img src="${ctx}/resources/images/ic_next.png" alt="다음 페이지"></a></span>
+                        	<span class="numPN  over right"><a href="${pageMaker.endPage + 1 }" data-page="6" title="다음 페이지로 이동하기"><img src="${ctx}/resources/images/ic_next.png" alt="다음 페이지"></a></span>
                         </c:if>
 <%--                         <span class="numPN m_ar"><a href="#" data-page="14" title="마지막 페이지로 이동하기"><img src="${ctx}/resources/images/ic_next2.png" alt="마지막 페이지"></a></span> --%>
                     </p>

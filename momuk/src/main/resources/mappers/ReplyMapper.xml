@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.momuk.mapper.ReplyMapper">
+	<select id="getTime2" resultType="string">
+		SELECT sysdate
+		FROM   dual
+	</select>
+	
+	<insert id="insert">
+	    INSERT INTO reply(rno, bno, replytext, replyer)
+	    VALUES (common_reply_seq.nextval, #{bno}, #{replytext}, null)
+	</insert>
+	
+	<select id="read" resultType="kr.co.momuk.domain.ReplyDTO">
+	    SELECT	*
+	    FROM	reply
+	    WHERE 	rno = #{rno}
+	</select>
+	
+	<update id="update">
+	    UPDATE	reply
+	    SET		replytext = #{replytext}
+	    WHERE	rno = #{rno}
+	</update>
+	
+	<delete id="delete">
+	    DELETE
+	    FROM	reply
+	    WHERE	rno = #{rno}
+	</delete>
+	
+	<select id="getListWithPaging" resultType="kr.co.momuk.domain.ReplyDTO">
+	    <![CDATA[
+	        SELECT	rno,
+	                bno,
+	                replytext,
+	                replyer,
+	                regdate
+	        FROM	(SELECT /*+ INDEX(reply REPLY_RNO_PK) */
+	                    rownum rn,
+	                    rno,
+	                    bno,
+	                    replytext,
+	                    replyer,
+	                    regdate
+	                 FROM reply
+	                 WHERE bno = #{bno}
+	                 AND rno > 0
+	                 AND rownum <= #{cri.pageNum} * #{cri.amount})
+	        WHERE	rn > (#{cri.pageNum} - 1) * #{cri.amount}
+	    ]]>
+	</select>
+	
+	<select id="getCountByBno" resultType="int">
+	    <![CDATA[
+	        SELECT	count(rno)
+	        FROM	reply
+	        WHERE	bno = #{bno}
+	    ]]>
+	</select>
+
+</mapper>

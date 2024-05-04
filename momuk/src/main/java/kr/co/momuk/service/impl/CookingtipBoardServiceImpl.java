@@ -1,7 +1,10 @@
 package kr.co.momuk.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -22,7 +25,7 @@ public class CookingtipBoardServiceImpl implements ICookingtipBoardService{
 	
 	@Autowired
 	private CommonBoardMapper commonMapper;
-
+	
 	// 요리꿀팁 등록
 	@Transactional
 	@Override
@@ -77,4 +80,5 @@ public class CookingtipBoardServiceImpl implements ICookingtipBoardService{
 	public int getTotalCnt(Criteria cri){
 	    return cookingtipMapper.getTotalCnt(cri);
 	}
+
 }
