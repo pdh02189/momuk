@@ -10,7 +10,7 @@
 	</insert>
 	
 	<select id="selectCookingtipByBno" resultType="kr.co.momuk.domain.DetailDTO">
-	    SELECT cb.bno, cb.title AS title, cb.writer AS writer, cb.regdate, cb.viewcnt, cb.replycnt, ct.category, ct.content
+	    SELECT cb.bno, cb.title, cb.writer, cb.regdate, cb.viewcnt, cb.replycnt, cb.uuid, cb.uploadpath, cb.filename, ct.category, ct.content
 	    FROM common_board cb
 	    JOIN cookingtip_board ct ON cb.bno = ct.bno
 	    WHERE cb.bno = #{bno}
@@ -39,11 +39,29 @@
 					uuid,
 					uploadpath,
 					filename
-			FROM	common_board	
-			WHERE	bno > 0
-			AND		boardId = 3
-			ORDER BY bno DESC, regdate DESC
+			FROM	(SELECT /*+ INDEX_DESC(common_board COMMON_BOARD_BNO_PK) */
+						rownum rn,
+                        bno,
+                        boardId,
+						title,
+						writer,
+						regdate,
+						viewcnt,
+						replycnt,
+						uuid,
+						uploadpath,
+						filename
+                    FROM common_board
+                    WHERE rownum <= #{pageNum} * #{amount}
+                    AND boardId = 3)	
+			WHERE	rn > (#{pageNum} - 1) * #{amount}
 		]]>
     </select>
 	
+	<select id="getTotalCnt" resultType="int">
+	    SELECT  count(*)
+	    FROM    common_board
+	    WHERE   bno > 0
+	    AND		boardId = 3
+	</select>
 </mapper>

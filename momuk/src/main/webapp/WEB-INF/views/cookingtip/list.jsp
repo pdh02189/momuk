@@ -100,15 +100,21 @@
                 </ul>
                 <div class="paging1">
                     <p>
-                        <span class="numPN m_ar"><a href="#" data-page="1" title="처음 페이지로 이동하기"><img src="${ctx}/resources/images/ic_prev2.png" alt="처음 페이지"></a></span>
-                        <span class="numPN over left"><a href="#" data-page="1" title="이전 페이지로 이동하기"><img src="${ctx}/resources/images/ic_prev.png" alt="이전 페이지"></a></span>
-                        <span class="Present"><a class="on" href="#" data-page="1">1</a></span>
-                        <span><a href="#" data-page="2">2</a></span>
-                        <span><a href="#" data-page="3">3</a></span>
-                        <span><a href="#" data-page="4">4</a></span>
-                        <span><a href="#" data-page="5">5</a></span>
-                        <span class="numPN  over right"><a href="#" data-page="11" title="다음 페이지로 이동하기"><img src="${ctx}/resources/images/ic_next.png" alt="다음 페이지"></a></span>
-                        <span class="numPN m_ar"><a href="#" data-page="14" title="마지막 페이지로 이동하기"><img src="${ctx}/resources/images/ic_next2.png" alt="마지막 페이지"></a></span>
+<%--                         <span class="numPN m_ar"><a href="#" data-page="1" title="처음 페이지로 이동하기"><img src="${ctx}/resources/images/ic_prev2.png" alt="처음 페이지"></a></span> --%>
+                        <c:if test="${pageMaker.prev }">
+                        	<span class="numPN over left"><a href="${pageMaker.startPage - 1 }" data-page="1" title="이전 페이지로 이동하기"><img src="${ctx}/resources/images/ic_prev.png" alt="이전 페이지"></a></span>
+                        </c:if>
+                        <c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage }">
+	                        <span class="${pageMaker.cri.pageNum == num ? 'Present' : '' }"><a class="${pageMaker.cri.pageNum == num ? 'on' : '' }" href="${num}" data-page="${num}">${num}</a></span>
+<!-- 	                        <span><a href="#" data-page="2">2</a></span> -->
+<!-- 	                        <span><a href="#" data-page="3">3</a></span> -->
+<!-- 	                        <span><a href="#" data-page="4">4</a></span> -->
+<!-- 	                        <span><a href="#" data-page="5">5</a></span> -->
+                        </c:forEach>
+                        <c:if test="${pageMaker.next }">
+                        	<span class="numPN  over right"><a href="${pageMaker.endPage + 1 }" data-page="11" title="다음 페이지로 이동하기"><img src="${ctx}/resources/images/ic_next.png" alt="다음 페이지"></a></span>
+                        </c:if>
+<%--                         <span class="numPN m_ar"><a href="#" data-page="14" title="마지막 페이지로 이동하기"><img src="${ctx}/resources/images/ic_next2.png" alt="마지막 페이지"></a></span> --%>
                     </p>
                 </div>
             </div>
@@ -116,8 +122,6 @@
             <form id="actionForm" action="${ctx }/cookingtip/list" method="get">
             	<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
             	<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
-            	<input type="hidden" name="type" value="${pageMaker.cri.type }">
-         		<input type="hidden" name="keyword" value="${pageMaker.cri.keyword }">
             </form>
 <script>
 $(function() {
@@ -132,6 +136,15 @@ $(function() {
 		actionForm.attr("action", "${ctx}/cookingtip/detail");
 		actionForm.submit();
 	});
+	
+	var actionForm = $("#actionForm");
+	$(".paging1 span a").on("click", function(e) {
+		e.preventDefault();
+		console.log('click');
+		actionForm.find("input[name='pageNum']").val($(this).attr("href"));
+		actionForm.submit();
+	});
+
 });
 </script>
 

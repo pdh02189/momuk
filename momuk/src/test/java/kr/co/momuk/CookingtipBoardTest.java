@@ -99,4 +99,5 @@ public class CookingtipBoardTest {
 	            .param("amount", "12"))
 	            .andReturn().getModelAndView().getModelMap());
 	}
+
 }

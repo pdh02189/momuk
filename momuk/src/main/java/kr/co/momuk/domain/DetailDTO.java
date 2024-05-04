@@ -12,6 +12,9 @@ public class DetailDTO {
 	private Date regdate;
 	private int viewcnt;
 	private int replycnt;
+	private String uuid;
+    private String uploadpath;
+    private String filename;
     private String category;
     private String content;
 }
