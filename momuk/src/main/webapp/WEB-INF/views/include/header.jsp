@@ -65,7 +65,7 @@
         <header>
             <h2 class="d_none">헤더 영역</h2>
             <div class="header_inner">
-                <a href="index.jsp" class="header_logo"></a>
+                <a href="${ctx }/" class="header_logo"></a>
                 <div class="search_box">
                     <form>
                         <fieldset>
@@ -78,10 +78,10 @@
                 <div class="my_wrap">
                     <ul class="top">
                         <li class="join">
-                            <a href="join.jsp">회원가입</a>
+                            <a href="${ctx }/join">회원가입</a>
                         </li>
                         <li class="login">
-                            <a href="login.jsp">로그인</a>
+                            <a href="${ctx }/login">로그인</a>
                         </li>
                         <li class="logout">
                             <a href="#">로그아웃</a>
@@ -89,13 +89,13 @@
                     </ul>
                     <ul class="my">
                         <li class="mypage">
-                            <a href="mypage/myinfo.jsp">마이페이지</a>
+                            <a href="${ctx }/mypage/myinfo">마이페이지</a>
                         </li>
                         <li class="cart">
-                            <a href="mypage/cart.jsp">장바구니</a>
+                            <a href="${ctx }/mypage/cart">장바구니</a>
                         </li>
                         <li class="delivery">
-                            <a href="mypage/delivery.jsp">배송조회</a>
+                            <a href="${ctx }/mypage/delivery">배송조회</a>
                         </li>
                     </ul>
                 </div>
@@ -112,19 +112,19 @@
                 <h3 class="d_none">글로벌 네비게이션 영역</h3>
                 <ul>
                     <li>
-                        <a href="store/index.jsp">스토어</a>
+                        <a href="${ctx }/store/list">스토어</a>
                     </li>
                     <li>
-                        <a href="recipe/index.jsp">레시피</a>
+                        <a href="${ctx }/recipe/list">레시피</a>
                     </li>
                     <li>
-                        <a href="cookingtip/index.jsp">요리 꿀팁</a>
+                        <a href="${ctx }/cookingtip/list">요리 꿀팁</a>
                     </li>
                     <li>
-                        <a href="ranking/index.jsp">랭킹</a>
+                        <a href="${ctx }/ranking/list">랭킹</a>
                     </li>
                     <li>
-                        <a href="event/index.jsp">이벤트</a>
+                        <a href="${ctx }/event/list">이벤트</a>
                     </li>
                 </ul>
             </nav>
@@ -133,24 +133,24 @@
                     <div class="menu_wrap">
                         <ul class="menu_list">
                             <li>
-                                <a href="store/index.jsp" class="menu_depth1">스토어</a>
+                                <a href="${ctx }/store/list" class="menu_depth1">스토어</a>
                             </li>
                             <li>
-                                <a href="recipe/index.jsp" class="menu_depth1">레시피</a>
+                                <a href="${ctx }/recipe/list" class="menu_depth1">레시피</a>
                             </li>
                             <li>
-                                <a href="cookingtip/index.jsp" class="menu_depth1">요리 꿀팁</a>
+                                <a href="${ctx }/cookingtip/list" class="menu_depth1">요리 꿀팁</a>
                             </li>
                             <li>
-                                <a href="ranking/index.jsp" class="menu_depth1">랭킹</a>
+                                <a href="${ctx }/ranking/list" class="menu_depth1">랭킹</a>
                             </li>
                             <li>
-                                <a href="event/index.jsp" class="menu_depth1">이벤트</a>
+                                <a href="${ctx }/event/list" class="menu_depth1">이벤트</a>
                             </li>
                             <li class="btn_zone">
-                                <a href="login.jsp" class="login btn_red">로그인</a>
-                                <a href="join.jsp" class="join btn_white">회원가입</a>
-                                <a href="mypage/myinfo.jsp" class="mypage btn_red">마이페이지</a>
+                                <a href="${ctx }/login" class="login btn_red">로그인</a>
+                                <a href="${ctx }/join" class="join btn_white">회원가입</a>
+                                <a href="${ctx }/mypage/myinfo" class="mypage btn_red">마이페이지</a>
                                 <a href="#" class="logout btn_white">로그아웃</a>
                             </li>
                         </ul>

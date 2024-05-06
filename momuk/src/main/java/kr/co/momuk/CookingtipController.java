@@ -121,6 +121,7 @@ public class CookingtipController {
 		
 		int total = cookingtipService.getTotalCnt(cri);
 	    log.info("total : " + total);
+	    model.addAttribute("total", total); // 총 게시물 수를 모델에 추가
 
 	    model.addAttribute("pageMaker", new PageDTO(cri, total));
 	}

@@ -54,7 +54,7 @@
                     </ul>
                     <div class="list_total_wrap">
                         <div class="list_total">
-                            <p>총 <span>201</span>개<strong class="mobile_none">의 꿀팁이 있습니다.</strong></p>
+                            <p>총 <span>${total}</span>개<strong class="mobile_none">의 꿀팁이 있습니다.</strong></p>
                         </div>
                         <ul class="list_sort">
                             <li>

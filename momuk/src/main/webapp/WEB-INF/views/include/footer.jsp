@@ -14,7 +14,7 @@
                 </ul>
             </div>
             <div class="footer_inner">
-                <a href="index.jsp" class="footer_logo"></a>
+                <a href="${ctx }/" class="footer_logo"></a>
                 <address>
                     <p>COPYRIGHT&copy; 2024 오늘뭐먹지? All rights reserved.</p>
                 </address>
