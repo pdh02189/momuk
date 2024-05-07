@@ -29,12 +29,13 @@ public class ReplyServiceImpl implements IReplyService{
 	    log.info("reply register .................." + rDto);
 
 	    try {
-	    	commonMapper.plusReplyCnt(rDto.getBno());
+	        int result = mapper.insert(rDto); // 댓글 등록
+	        commonMapper.plusReplyCnt(rDto.getBno()); // 댓글 수 업데이트
+	        return result;
 	    } catch (Exception e) {
 	        e.printStackTrace();
+	        return 0; // 등록 실패
 	    }
-
-	    return mapper.insert(rDto);
 	}
 
 	@Override
@@ -58,12 +59,13 @@ public class ReplyServiceImpl implements IReplyService{
 	    ReplyDTO rDto = mapper.read(rno);
 
 	    try {
-	    	commonMapper.minusReplyCnt(rDto.getBno());
+	        int result = mapper.delete(rno); // 댓글 삭제
+	        commonMapper.minusReplyCnt(rDto.getBno()); // 댓글 수 감소
+	        return result;
 	    } catch (Exception e) {
 	        e.printStackTrace();
+	        return 0; // 삭제 실패
 	    }
-
-	    return mapper.delete(rno);
 	}
 
 	@Override

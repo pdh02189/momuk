@@ -15,5 +15,6 @@ public interface ICookingtipBoardService {
 	public boolean updateCookingTipBoard(CommonBoardDTO commonBoard, CookingtipBoardDTO cookingtip);
 	public boolean removeCookingTipBoard(int bno);
 	public List<DetailDTO> selectAllCookingtip(Criteria cri);
+	
 	public int getTotalCnt(Criteria cri);
 }

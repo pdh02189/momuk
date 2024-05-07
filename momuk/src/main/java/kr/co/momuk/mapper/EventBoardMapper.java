@@ -12,6 +12,6 @@ public interface EventBoardMapper {
 	 public int updateEvent(EventBoardDTO event);
 	 public int deleteEvent(int bno);
 	 
-	 public List<DetailDTO> selectAllCookingtip(Criteria cri);
+	 public List<DetailDTO> selectAllEvent(Criteria cri);
 	 public int getTotalCnt(Criteria cri);
 }

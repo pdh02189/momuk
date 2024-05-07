@@ -2,8 +2,8 @@
 <%@ include file="../include/header.jsp" %>
             <div class="main_content">
                 <div class="sub_nav">
-                    <a href="../index.html" class="font_gray">홈</a>
-                    <a href="../cookingtip/index.html">요리 꿀팁</a>
+                    <a href="${ctx }/" class="font_gray">홈</a>
+                    <a href="${ctx }/cookingtip/list">요리 꿀팁</a>
                 </div>
                 <div class="sub_tit">
                     <h3>요리 꿀팁</h3>
@@ -147,5 +147,6 @@ $(function() {
 
 });
 </script>
+
 
 <%@ include file="../include/footer.jsp" %>

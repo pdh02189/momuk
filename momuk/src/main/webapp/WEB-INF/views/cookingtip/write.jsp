@@ -9,12 +9,49 @@ $(document).ready(function() {
 	var formObj = $("form[role='form']");
 	
 	$("button[type='submit']").on("click", function(e){
-		e.preventDefault();
-		    
-		console.log("submit clicked");
-		    
-		formObj.submit();
+		 e.preventDefault();
+
+		// 폼 유효성 검사 함수 호출
+	    var isValid = validateForm();
+
+	    if (isValid) {
+	        console.log("submit clicked");
+	        formObj.submit();
+	    }
 	});
+	
+	// 폼 유효성 검사 함수
+	function validateForm() {
+	    // 카테고리 선택 확인
+	    var category = $("select[name='category']").val();
+	    if (category === "") {
+	        alert("카테고리를 선택하세요.");
+	        return false;
+	    }
+
+	    // 제목 입력 확인
+	    var title = $("input[name='title']").val();
+	    if (title.trim() === "") {
+	        alert("제목을 입력하세요.");
+	        return false;
+	    }
+
+	    // 내용 입력 확인
+	    var content = $("#summernote").val();
+	    if (content.trim() === "") {
+	        alert("내용을 입력하세요.");
+	        return false;
+	    }
+
+	    // 대표사진 첨부 확인
+	    var photo = $("input[name='uploadFile']").val();
+	    if (photo === "") {
+	        alert("대표사진을 첨부하세요.");
+	        return false;
+	    }
+
+	    return true; // 폼 유효성 검사 통과 시 true 반환
+	}
 		  
 	var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
 	var maxSize = 5242880; //5MB
@@ -85,6 +122,26 @@ $(document).ready(function() {
 		           			}
 		}); //$.ajax
 	});
+	
+	// 취소 버튼 클릭
+    $(".comm_write_btn_wrap .btn_white").on("click", function() {
+        // 작성 중인 내용 확인
+        var category = $("select[name='category']").val(); // 카테고리 선택값 가져옴
+        var title = $("input[name='title']").val(); // 제목 입력값 가져옴
+        var content = $("#summernote").summernote("code"); // 내용 입력값 가져옴
+        var photo = $("input[name='uploadFile']").val(); // 사진 첨부 여부 확인
+        
+        if (title.trim() !== "" || category.trim() !== "" || content.trim() !== "" || photo.trim() !== "") {
+            // 작성 중인 내용이 있을 때 알림창 표시
+            if (confirm("작성 중인 내용이 있습니다. 정말 취소하시겠습니까?")) {
+                // 확인을 눌렀을 때 이전 페이지로 이동
+                history.back();
+            }
+        } else {
+            // 작성 중인 내용이 없는 경우 바로 이전 페이지로 이동
+            history.back();
+        }
+    });
 
 });
 </script>
@@ -157,8 +214,8 @@ $(document).ready(function() {
 </script>
             <div class="main_content">
                 <div class="sub_nav">
-                    <a href="../index.html" class="font_gray">홈</a>
-                    <a href="../cookingtip/index.html">요리 꿀팁</a>
+                    <a href="${ctx }/" class="font_gray">홈</a>
+                    <a href="${ctx }/cookingtip/list">요리 꿀팁</a>
                 </div>
                 <div class="sub_tit">
                     <h3>요리꿀팁 작성</h3>
@@ -175,7 +232,7 @@ $(document).ready(function() {
                                 </div>
                                 <div class="cont_box">
                                     <select class="w220" name="category">
-                                        <option>카테고리 선택</option>
+                                        <option value="">카테고리 선택</option>
                                         <option value="손질법">손질법</option>
                                         <option value="보관법">보관법</option>
                                         <option value="요리정보">요리정보</option>

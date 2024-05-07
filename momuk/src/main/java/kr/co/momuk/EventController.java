@@ -12,18 +12,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.co.momuk.domain.CommonBoardDTO;
-import kr.co.momuk.domain.CookingtipBoardDTO;
 import kr.co.momuk.domain.Criteria;
+import kr.co.momuk.domain.EventBoardDTO;
 import kr.co.momuk.domain.PageDTO;
-import kr.co.momuk.service.ICookingtipBoardService;
+import kr.co.momuk.service.IEventBoardService;
 import lombok.extern.log4j.Log4j;
 
 @Controller
-@RequestMapping("/cookingtip")
+@RequestMapping("/event")
 @Log4j
-public class CookingtipController {
+public class EventController {
+	
 	@Autowired
-	private ICookingtipBoardService cookingtipService;
+	private IEventBoardService eventService;
 	
 	// 등록
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
@@ -32,8 +33,8 @@ public class CookingtipController {
 	}
 	
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
-	public String addCookingtip(@ModelAttribute("commonBoard") CommonBoardDTO commonBoard,
-            					@ModelAttribute("cookingTip") CookingtipBoardDTO cookingTip,
+	public String addEvent(@ModelAttribute("commonBoard") CommonBoardDTO commonBoard,
+            					@ModelAttribute("event") EventBoardDTO event,
             					Model model,
             					RedirectAttributes rttr,
             					HttpSession session) {
@@ -53,9 +54,9 @@ public class CookingtipController {
 	    // commonBoard 객체에 FILENAME 설정
 	    commonBoard.setFilename(filename);
 	    
-		cookingtipService.insertCookingTipBoard(commonBoard, cookingTip);
+	    eventService.insertEventBoard(commonBoard, event);
 		
-        return "redirect:/cookingtip/list"; // 리다이렉트 경로로 수정해야 함
+        return "redirect:/event/list"; // 리다이렉트 경로로 수정해야 함
 	}
 	
 	// 상세
@@ -63,13 +64,13 @@ public class CookingtipController {
 	public void read(@RequestParam("bno") int bno, @ModelAttribute("cri") Criteria cri, Model model) throws Exception {
 		log.info("show detail.....................");
 		
-		model.addAttribute("cookingtip", cookingtipService.detailCookingTipBoard(bno));
+		model.addAttribute("event", eventService.detailEventBoard(bno));
 	}
 	
 	// 수정
 	@RequestMapping(value = "/modify", method = RequestMethod.POST)
-	public String updateCookingtip(@ModelAttribute("commonBoard") CommonBoardDTO commonBoard,
-            					@ModelAttribute("cookingTip") CookingtipBoardDTO cookingTip,
+	public String updateEvent(@ModelAttribute("commonBoard") CommonBoardDTO commonBoard,
+            					@ModelAttribute("event") EventBoardDTO event,
             					@ModelAttribute("cri") Criteria cri,
             					RedirectAttributes rttr,
             					Model model,
@@ -89,41 +90,40 @@ public class CookingtipController {
 	    commonBoard.setUploadpath(uploadpath);
 	    // commonBoard 객체에 FILENAME 설정
 	    commonBoard.setFilename(filename);
-		cookingtipService.updateCookingTipBoard(commonBoard, cookingTip);
+		eventService.updateEventBoard(commonBoard, event);
 		
 		rttr.addAttribute("pageNum", cri.getPageNum());
 	    rttr.addAttribute("amount", cri.getAmount());
 	    
-        return "redirect:/cookingtip/list"; // 리다이렉트 경로로 수정해야 함
+        return "redirect:/event/list"; // 리다이렉트 경로로 수정해야 함
 	}
 	
 	// 삭제
 	@RequestMapping(value = "/remove", method = RequestMethod.POST)
-	public String removeCookingtip(@RequestParam("bno") int bno,
+	public String removeEvent(@RequestParam("bno") int bno,
 			@ModelAttribute("cri") Criteria cri,
 			RedirectAttributes rttr) {
 		log.info("remove.....................");
 		
-		cookingtipService.removeCookingTipBoard(bno);
+		eventService.removeEventBoard(bno);
 		
 		rttr.addAttribute("pageNum", cri.getPageNum());
 	    rttr.addAttribute("amount", cri.getAmount());
 	    
-		return "redirect:/cookingtip/list";
+		return "redirect:/event/list";
 	}
 	
 	// 목록 전체
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public void selectAllCookingtip(Criteria cri, Model model) throws Exception {
+	public void selectAllEvent(Criteria cri, Model model) throws Exception {
 		log.info("show all list.....................");
 		
-		model.addAttribute("list", cookingtipService.selectAllCookingtip(cri));
+		model.addAttribute("list", eventService.selectAllEvent(cri));
 		
-		int total = cookingtipService.getTotalCnt(cri);
+		int total = eventService.getTotalCnt(cri);
 	    log.info("total : " + total);
 	    model.addAttribute("total", total); // 총 게시물 수를 모델에 추가
 
 	    model.addAttribute("pageMaker", new PageDTO(cri, total));
 	}
-	
 }

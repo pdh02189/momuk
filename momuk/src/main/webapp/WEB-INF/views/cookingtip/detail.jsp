@@ -2,8 +2,8 @@
 <%@ include file="../include/header.jsp" %>
             <div class="main_content">
                 <div class="sub_nav">
-                    <a href="../index.html" class="font_gray">홈</a>
-                    <a href="../cookingtip/index.html">요리 꿀팁</a>
+                    <a href="${ctx }/" class="font_gray">홈</a>
+                    <a href="${ctx }/cookingtip/list">요리 꿀팁</a>
                 </div>
                 <div class="comm_detail_top">
                     <!-- 글쓴이만 보이는 버튼 -->
@@ -41,52 +41,7 @@
                 </div>
                 <div class="comm_detail_comment_list">
                     <ul id="replyList">
-<!--                         <li> -->
-<!--                             <div class="comm_box_list"> -->
-<!--                                 <div class="info01"> -->
-<!--                                     <p class="name">자취요리어려웡</p> -->
-<!--                                     <p class="font_gray">2024.04.13 09:00</p> -->
-<!--                                     <a href="#" class="font_gray">수정</a> -->
-<!--                                     <a href="#" class="font_gray">삭제</a> -->
-<!--                                 </div> -->
-<!--                                 <h5> -->
-<!--                                     애호박 껍질이 항상 중간에서부터 안벗겨졌는데 이거 보고 쉽게 해결했어요! 꿀팁 감사합니다~   -->
-<!--                                 </h5> -->
-<!--                             </div> -->
-<!--                             <div class="comm_box_write"> -->
-<!--                                 <textarea placeholder="댓글을 입력하세요">애호박 껍질이 항상 중간에서부터 안벗겨졌는데 이거 보고 쉽게 해결했어요! 꿀팁 감사합니다~ </textarea> -->
-<!--                                 <div class="write_info"> -->
-<!--                                     <p class="font_gray">0/500</p> -->
-<!--                                     <div> -->
-<!--                                         <button type="button" class="comm_write_button small_btn btn_white mr5">취소</button> -->
-<!--                                         <button type="button" class="comm_write_button small_btn btn_red">수정</button> -->
-<!--                                     </div> -->
-<!--                                 </div> -->
-<!--                             </div> -->
-<!--                         </li> -->
-<!--                         <li> -->
-<!--                             <div class="comm_box_list"> -->
-<!--                                 <div class="info01"> -->
-<!--                                     <p class="name">자취요리어려웡</p> -->
-<!--                                     <p class="font_gray">2024.04.13 09:00</p> -->
-<!--                                     <a href="#" class="font_gray">수정</a> -->
-<!--                                     <a href="#" class="font_gray">삭제</a> -->
-<!--                                 </div> -->
-<!--                                 <h5> -->
-<!--                                     애호박 껍질이 항상 중간에서부터 안벗겨졌는데 이거 보고 쉽게 해결했어요! 꿀팁 감사합니다~   -->
-<!--                                 </h5> -->
-<!--                             </div> -->
-<!--                             <div class="comm_box_write" style="display: none;"> -->
-<!--                                 <textarea placeholder="댓글을 입력하세요">애호박 껍질이 항상 중간에서부터 안벗겨졌는데 이거 보고 쉽게 해결했어요! 꿀팁 감사합니다~ </textarea> -->
-<!--                                 <div class="write_info"> -->
-<!--                                     <p class="font_gray">0/500</p> -->
-<!--                                     <div> -->
-<!--                                         <button type="button" class="comm_write_button small_btn btn_white">취소</button> -->
-<!--                                         <button type="button" class="comm_write_button small_btn btn_red">수정</button> -->
-<!--                                     </div> -->
-<!--                                 </div> -->
-<!--                             </div> -->
-<!--                         </li> -->
+
                     </ul>
                     <div class="paging1" style="margin-top: 0; margin-bottom: 40px;"></div>
                 </div>
@@ -258,9 +213,7 @@ $(document).ready(function() {
 	        contextPath: "${ctx}"
 	    };
 
-	    replyService.update(reply, function(result) {
-	        alert(result);
-	        
+	    replyService.update(reply, function(result) {	        
 	        showList(pageNum);
 	    });
 	});
@@ -277,7 +230,6 @@ $(document).ready(function() {
             };
 
             replyService.remove(reply, function(result) {
-                alert(result);
                 showList(pageNum);
             });
         }

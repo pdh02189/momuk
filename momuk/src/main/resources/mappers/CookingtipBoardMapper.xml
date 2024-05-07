@@ -28,7 +28,7 @@
 		WHERE bno = #{bno}
     </delete>
     
-    <select id="selectAllCookingtip" resultType="kr.co.momuk.domain.CommonBoardDTO">
+    <select id="selectAllCookingtip" resultType="kr.co.momuk.domain.DetailDTO">
     	<![CDATA[
 			SELECT	bno,
 					title,
@@ -64,4 +64,5 @@
 	    WHERE   bno > 0
 	    AND		boardId = 3
 	</select>
+	
 </mapper>

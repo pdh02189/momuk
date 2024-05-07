@@ -4,58 +4,63 @@
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.momuk.mapper.EventBoardMapper"> 
 
-	<insert id="insertCookingtip">
-        INSERT INTO cookingtip_board (bno, category, content)
-        VALUES (common_board_seq.currval, #{category}, #{content})
+	<insert id="insertEvent">
+        INSERT INTO event_board (bno, startdate, enddate, content)
+        VALUES (common_board_seq.currval, #{startdate}, #{enddate}, #{content})
 	</insert>
 	
-	<select id="selectCookingtipByBno" resultType="kr.co.momuk.domain.DetailDTO">
-	    SELECT cb.bno, cb.title, cb.writer, cb.regdate, cb.viewcnt, cb.replycnt, cb.uuid, cb.uploadpath, cb.filename, ct.category, ct.content
+	<select id="selectEventByBno" resultType="kr.co.momuk.domain.DetailDTO">
+	    SELECT cb.bno, cb.title, cb.writer, cb.regdate, cb.viewcnt, cb.replycnt, cb.uuid, cb.uploadpath, cb.filename, eb.startdate, eb.enddate, eb.content
 	    FROM common_board cb
-	    JOIN cookingtip_board ct ON cb.bno = ct.bno
+	    JOIN event_board eb ON cb.bno = eb.bno
 	    WHERE cb.bno = #{bno}
 	</select>
 	
-	<update id="updateCookingtip">
-		UPDATE cookingtip_board
-		SET	category = #{category}, content = #{content}
+	<update id="updateEvent">
+		UPDATE event_board
+		SET	startdate = #{startdate}, enddate = #{enddate}, content = #{content}
 		WHERE bno = #{bno}
 	</update>
 	
-	<delete id="deleteCookingtip">
+	<delete id="deleteEvent">
     	DELETE
-		FROM cookingtip_board
+		FROM event_board
 		WHERE bno = #{bno}
     </delete>
     
-    <select id="selectAllCookingtip" resultType="kr.co.momuk.domain.CommonBoardDTO">
-    	<![CDATA[
-			SELECT	bno,
-					title,
-					writer,
-					regdate,
-					viewcnt,
-					replycnt,
-					uuid,
-					uploadpath,
-					filename
-			FROM	(SELECT /*+ INDEX_DESC(common_board COMMON_BOARD_BNO_PK) */
-						rownum rn,
-                        bno,
-                        boardId,
-						title,
-						writer,
-						regdate,
-						viewcnt,
-						replycnt,
-						uuid,
-						uploadpath,
-						filename
-                    FROM common_board
-                    WHERE rownum <= #{pageNum} * #{amount}
-                    AND boardId = 3)	
-			WHERE	rn > (#{pageNum} - 1) * #{amount}
-		]]>
+    <select id="selectAllEvent" resultType="kr.co.momuk.domain.DetailDTO">
+		<![CDATA[
+	        SELECT bno,
+			       title,
+			       writer,
+			       regdate,
+			       viewcnt,
+			       replycnt,
+			       uuid,
+			       uploadpath,
+			       filename,
+			       startdate,
+       			   enddate
+	        FROM (SELECT /*+ INDEX_DESC(common_board COMMON_BOARD_BNO_PK) */
+	             	   cb.bno,
+	                   cb.title,
+	                   cb.writer,
+	                   cb.regdate,
+	                   cb.viewcnt,
+	                   cb.replycnt,
+	                   cb.uuid,
+	                   cb.uploadpath,
+	                   cb.filename,
+	                   eb.startdate,
+	                   eb.enddate,
+	                   rownum AS rn
+	            FROM common_board cb
+	            INNER JOIN event_board eb ON cb.bno = eb.bno
+	            WHERE rownum <= #{pageNum} * #{amount}
+	              AND cb.boardId = 4
+	        )
+	        WHERE rn > (#{pageNum} - 1) * #{amount}
+	    ]]>
     </select>
 	
 	<select id="getTotalCnt" resultType="int">
