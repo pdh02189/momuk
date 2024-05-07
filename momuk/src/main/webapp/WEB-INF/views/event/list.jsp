@@ -8,7 +8,7 @@
                 </div>
                 <div class="sub_tit">
                     <h3>이벤트</h3>
-                    <button type="button" class="btn_write btn_red" onclick="location.href='write.html'"><span>이벤트 등록</span></button>
+                    <button type="button" class="btn_write btn_red"><span>이벤트 등록</span></button>
                 </div>
                 <ul class="event_list">
                 	<c:forEach items="${list }" var="board">
@@ -19,8 +19,8 @@
 	                            </div>
 	                            <div class="list_txt">
 	                                <!-- 진행예정 state01 진행중 state02 종료 state03 클래스-->
-	                                <span class="state01"></span>
-	                                <span class="date font_gray">${board.startdate } ~ ${board.enddate }</span>
+	                                <span class="state"></span>
+	                                <span class="date font_gray"><fmt:formatDate pattern="yyyy.MM.dd" value="${board.startdate }" /> ~ <fmt:formatDate pattern="yyyy.MM.dd" value="${board.enddate }" /></span>
 	                            </div>
 	                        </a>
 	                    </li>
@@ -58,7 +58,7 @@ $(function() {
 	});
 	
 	var actionForm = $("#actionForm");
-	$(".comm_list li a").on("click", function(e) {
+	$(".event_list li a").on("click", function(e) {
 		e.preventDefault();
 		actionForm.append("<input type='hidden' name='bno' value='" + $(this).attr("href") + "'>");
 		actionForm.attr("action", "${ctx}/event/detail");
@@ -73,6 +73,28 @@ $(function() {
 		actionForm.submit();
 	});
 
+	// 이벤트 진행상태
+	$(".event_list li").each(function() {
+	    var dateString = $(this).find(".list_txt .date").text(); // 날짜가 포함된 텍스트를 가져옵니다.
+	    var dates = dateString.split(" ~ "); // 시작 날짜와 종료 날짜를 분리합니다.
+	    var startDate = new Date(dates[0]); // 첫 번째 요소는 시작 날짜입니다.
+	    var endDate = new Date(dates[1]); // 두 번째 요소는 종료 날짜입니다.
+	    
+	    var today = new Date(); // 오늘 날짜를 가져옵니다.
+	
+	    // 시작 날짜 이전이면 state01 클래스를 추가합니다.
+	    if (today < startDate) {
+	        $(this).find(".list_txt .state").addClass("state01");
+	    }
+	    // 종료 날짜 이후이면 state03 클래스를 추가합니다.
+	    else if (today > endDate) {
+	        $(this).find(".list_txt .state").addClass("state03");
+	    }
+	    // 그 외의 경우는 시작 날짜와 종료 날짜 사이이므로 state02 클래스를 추가합니다.
+	    else {
+	        $(this).find(".list_txt .state").addClass("state02");
+	    }
+	});
 });
 </script>
 <%@ include file="../include/footer.jsp" %>

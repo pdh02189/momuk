@@ -49,7 +49,7 @@ $(document).ready(function() {
 	        return false;
 	    }
 
-	 	// 대표사진 첨부 확인
+	    // 대표사진 첨부 확인
 	    var photoSrc = $(".thumb img").attr("src");
 	    if (photoSrc === "") {
 	        alert("대표사진을 첨부하세요.");
@@ -238,7 +238,7 @@ $(document).ready(function() {
                                     <h3 class="important">제목</h3>
                                 </div>
                                 <div class="cont_box">
-                                    <input type="text" class="w100p" placeholder="제목을 입력하세요" name="title">
+                                    <input type="text" class="w100p" placeholder="제목을 입력하세요" name="title" value="${event.title}">
                                 </div>
                             </div>
                             <div class="comm_write_box">
@@ -246,9 +246,9 @@ $(document).ready(function() {
                                     <h3 class="important">기간</h3>
                                 </div>
                                 <div class="cont_box period nowrap">
-                                    <input type="date" class="w390" max="9999-12-31" name="startdate">
+                                    <input type="date" class="w390" max="9999-12-31" name="startdate" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${event.startdate }" />">
                                     <span class="ml10 mr10">~</span> 
-                                    <input type="date" class="w390" max="9999-12-31" name="enddate">
+                                    <input type="date" class="w390" max="9999-12-31" name="enddate"  value="<fmt:formatDate pattern="yyyy-MM-dd" value="${event.enddate }" />">
                                 </div>
                             </div>
                             <div class="comm_write_box">
@@ -257,6 +257,7 @@ $(document).ready(function() {
                                 </div>
                                 <div class="cont_box">
                                     <textarea id="summernote" class="summernote_txt w100p" name="content">
+                                   		${event.content}
                                     </textarea>
                                 </div>
                             </div>
@@ -270,10 +271,10 @@ $(document).ready(function() {
                                         <label>
                                             <img src="${ctx}/resources/images/ic_cam.png" alt="사진 첨부">
                                             사진 첨부
-                                            <input type="file" class="imageSelector" name="uploadFile" accept="image/jpeg, image/jpg, image/png"  multiple="">
+                                            <input type="file" class="imageSelector" name="uploadFile" accept="image/jpeg, image/jpg, image/png"  multiple="" value="${event.filename}">
                                         </label>
-                                        <div class="thumb d_none">
-                                            <img src="">
+                                        <div class="thumb">
+                                            <img src="${ctx}/resources/fileUpload/${event.uploadpath}/${event.uuid}_${event.filename}">
                                             <button type="button" class="dellink"></button>
                                         </div>
                                     </div>

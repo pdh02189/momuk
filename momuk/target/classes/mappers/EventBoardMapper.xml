@@ -60,6 +60,12 @@
 	              AND cb.boardId = 4
 	        )
 	        WHERE rn > (#{pageNum} - 1) * #{amount}
+	        ORDER BY CASE 
+				        WHEN enddate > CURRENT_DATE THEN 0
+				        ELSE 1
+				     END,
+				     startdate DESC,
+				     enddate DESC
 	    ]]>
     </select>
 	

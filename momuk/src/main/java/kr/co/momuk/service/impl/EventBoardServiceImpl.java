@@ -49,8 +49,8 @@ public class EventBoardServiceImpl implements IEventBoardService {
 	@Transactional
 	@Override
 	public boolean updateEventBoard(CommonBoardDTO commonBoard, EventBoardDTO event) {
-		boolean commonResult = commonMapper.updateCommonBoard(commonBoard) == 1;
 		boolean evnetResult = eventMapper.updateEvent(event) == 1;
+		boolean commonResult = commonMapper.updateCommonBoard(commonBoard) == 1;
 		boolean totalResult = evnetResult == commonResult;
 		
 		return totalResult;
@@ -60,8 +60,8 @@ public class EventBoardServiceImpl implements IEventBoardService {
 	@Transactional
 	@Override
 	public boolean removeEventBoard(int bno) {
-		boolean commonResult = commonMapper.deleteCommonBoard(bno) == 1;
 		boolean evnetResult = eventMapper.deleteEvent(bno) == 1;
+		boolean commonResult = commonMapper.deleteCommonBoard(bno) == 1;
 		boolean totalResult = evnetResult == commonResult;
 		
 		return totalResult;

@@ -43,9 +43,9 @@ $(document).ready(function() {
 	        return false;
 	    }
 
-	    // 대표사진 첨부 확인
-	    var photo = $("input[name='uploadFile']").val();
-	    if (photo === "") {
+	 	// 대표사진 첨부 확인
+	    var photoSrc = $(".thumb img").attr("src");
+	    if (photoSrc === "") {
 	        alert("대표사진을 첨부하세요.");
 	        return false;
 	    }
@@ -129,7 +129,7 @@ $(document).ready(function() {
         var category = $("select[name='category']").val(); // 카테고리 선택값 가져옴
         var title = $("input[name='title']").val(); // 제목 입력값 가져옴
         var content = $("#summernote").summernote("code"); // 내용 입력값 가져옴
-        var photo = $("input[name='uploadFile']").val(); // 사진 첨부 여부 확인
+        var photo =  $(".thumb img").attr("src"); // 사진 첨부 여부 확인
         
         if (title.trim() !== "" || category.trim() !== "" || content.trim() !== "" || photo.trim() !== "") {
             // 작성 중인 내용이 있을 때 알림창 표시

@@ -11,19 +11,47 @@ $(document).ready(function() {
 	$("button[type='submit']").on("click", function(e){
 		e.preventDefault();
 		    
-		console.log("submit clicked");
-		    
-		formObj.submit();
-	});
-	$(".comm_write_btn_wrap .btn_white").on("click", function(e){
-	    e.preventDefault(); // 기본 동작 방지
+		// 폼 유효성 검사 함수 호출
+	    var isValid = validateForm();
 
-	    // 사용자에게 확인 메시지 표시
-	    if (confirm("취소하시겠습니까?")) {
-	    	history.back();
-	    } 
-	    // 취소를 선택한 경우는 아무 동작도 하지 않음
+	    if (isValid) {
+	        console.log("submit clicked");
+	        formObj.submit();
+	    }
 	});
+	
+	// 폼 유효성 검사 함수
+	function validateForm() {
+	    // 카테고리 선택 확인
+	    var category = $("select[name='category']").val();
+	    if (category === "") {
+	        alert("카테고리를 선택하세요.");
+	        return false;
+	    }
+
+	    // 제목 입력 확인
+	    var title = $("input[name='title']").val();
+	    if (title.trim() === "") {
+	        alert("제목을 입력하세요.");
+	        return false;
+	    }
+
+	    // 내용 입력 확인
+	    var content = $("#summernote").val();
+	    if (content.trim() === "") {
+	        alert("내용을 입력하세요.");
+	        return false;
+	    }
+
+	 	// 대표사진 첨부 확인
+	    var photoSrc = $(".thumb img").attr("src");
+	    if (photoSrc === "") {
+	        alert("대표사진을 첨부하세요.");
+	        return false;
+	    }
+
+	    return true; // 폼 유효성 검사 통과 시 true 반환
+	}
 		  
 	var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
 	var maxSize = 5242880; //5MB
@@ -94,6 +122,26 @@ $(document).ready(function() {
 		           			}
 		}); //$.ajax
 	});
+	
+	// 취소 버튼 클릭
+    $(".comm_write_btn_wrap .btn_white").on("click", function() {
+        // 작성 중인 내용 확인
+        var category = $("select[name='category']").val(); // 카테고리 선택값 가져옴
+        var title = $("input[name='title']").val(); // 제목 입력값 가져옴
+        var content = $("#summernote").summernote("code"); // 내용 입력값 가져옴
+        var photo =  $(".thumb img").attr("src"); // 사진 첨부 여부 확인
+        
+        if (title.trim() !== "" || category.trim() !== "" || content.trim() !== "" || photo.trim() !== "") {
+            // 작성 중인 내용이 있을 때 알림창 표시
+            if (confirm("작성 중인 내용이 있습니다. 정말 취소하시겠습니까?")) {
+                // 확인을 눌렀을 때 이전 페이지로 이동
+                history.back();
+            }
+        } else {
+            // 작성 중인 내용이 없는 경우 바로 이전 페이지로 이동
+            history.back();
+        }
+    });
 
 });
 </script>

@@ -1,10 +1,16 @@
 package kr.co.momuk;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,9 +28,14 @@ import lombok.extern.log4j.Log4j;
 @RequestMapping("/event")
 @Log4j
 public class EventController {
-	
 	@Autowired
 	private IEventBoardService eventService;
+	
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		binder.registerCustomEditor(java.util.Date.class, new CustomDateEditor(dateFormat, false));
+	}
 	
 	// 등록
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
@@ -37,7 +48,7 @@ public class EventController {
             					@ModelAttribute("event") EventBoardDTO event,
             					Model model,
             					RedirectAttributes rttr,
-            					HttpSession session) {
+            					HttpSession session) throws Exception {
 		log.info("write post.....................");
 		
 		// 세션에서 UUID 값 가져오기
@@ -54,6 +65,17 @@ public class EventController {
 	    // commonBoard 객체에 FILENAME 설정
 	    commonBoard.setFilename(filename);
 	    
+	    Date startDate = event.getStartdate();
+	    Date endDate = event.getEnddate();
+
+	    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	    String formattedStartDate = sdf.format(startDate);
+	    String formattedEndDate = sdf.format(endDate);
+
+	    // 변환된 날짜를 다시 설정합니다.
+	    event.setStartdate(sdf.parse(formattedStartDate));
+	    event.setEnddate(sdf.parse(formattedEndDate));
+		
 	    eventService.insertEventBoard(commonBoard, event);
 		
         return "redirect:/event/list"; // 리다이렉트 경로로 수정해야 함

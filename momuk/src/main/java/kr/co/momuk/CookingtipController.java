@@ -40,11 +40,14 @@ public class CookingtipController {
 		log.info("write post.....................");
 		
 		// 세션에서 UUID 값 가져오기
-	    String uuid = (String) session.getAttribute("uuid");
-	    // 세션에서 UPLOADPATH 값 가져오기
-	    String uploadpath = (String) session.getAttribute("uploadpath");
-	    // 세션에서 FILENAME 값 가져오기
-	    String filename = (String) session.getAttribute("filename");
+		String uuid = (String) session.getAttribute("uuid");
+		log.info("UUID from session: " + uuid);
+		// 세션에서 UPLOADPATH 값 가져오기
+		String uploadpath = (String) session.getAttribute("uploadpath");
+		log.info("Upload path from session: " + uploadpath);
+		// 세션에서 FILENAME 값 가져오기
+		String filename = (String) session.getAttribute("filename");
+		log.info("Filename from session: " + filename);
 	    
 	    // commonBoard 객체에 UUID 설정
 	    commonBoard.setUuid(uuid);

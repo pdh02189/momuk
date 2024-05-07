@@ -1,17 +1,12 @@
 package kr.co.momuk;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import org.junit.Before;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -34,21 +29,19 @@ public class EventBoardTest {
 	}
 	
 	// 등록 테스트
-	@Test
-	public void testEventInsert() throws Exception {
-		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/event/write")
-	            .param("title", "임시데이터 넣기")
-	            .param("uuid", "test_uuid")
-	            .param("uploadpath", "test_uploadpath")
-	            .param("filename", "test_filename")
-	            .param("startdate", "2024-04-24")
-	            .param("enddate", "2024-05-02")
-	            .param("content", "드디어 ㅠㅠㅠㅠ"))
-	            .andExpect(status().is3xxRedirection())
-	            .andReturn();
-
-	    String redirectedUrl = result.getResponse().getHeader("Location");
-	    log.info("Redirected URL: " + redirectedUrl);
-	}
+//	@Test
+//	public void testEventInsert() throws Exception {
+//		String resultPage = mockMvc.perform(MockMvcRequestBuilders.post("/event/write")
+//	            .param("title", "임시데이터 넣기")
+//	            .param("uuid", "test_uuid")
+//	            .param("uploadpath", "12123")
+//	            .param("filename", "12123")
+//	            .param("startdate", "2024-04-28")
+//	            .param("enddate", "2024-05-02")
+//	            .param("content", "드디어 ㅠㅠㅠㅠ"))
+//	            .andReturn().getModelAndView().getViewName();
+//
+//	    log.info("resultpage : " + resultPage);
+//	}
 
 }

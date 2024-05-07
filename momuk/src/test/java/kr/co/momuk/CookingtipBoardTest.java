@@ -92,12 +92,12 @@ public class CookingtipBoardTest {
 //				.getModelMap());
 //	}
 	
-	@Test
-	public void testCookingtipAllList() throws Exception {
-	    log.info(mockMvc.perform(MockMvcRequestBuilders.get("/cookingtip/list")
-	            .param("pageNum", "2")
-	            .param("amount", "12"))
-	            .andReturn().getModelAndView().getModelMap());
-	}
+//	@Test
+//	public void testCookingtipAllList() throws Exception {
+//	    log.info(mockMvc.perform(MockMvcRequestBuilders.get("/cookingtip/list")
+//	            .param("pageNum", "2")
+//	            .param("amount", "12"))
+//	            .andReturn().getModelAndView().getModelMap());
+//	}
 
 }

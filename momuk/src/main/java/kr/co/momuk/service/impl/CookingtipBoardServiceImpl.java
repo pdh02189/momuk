@@ -48,8 +48,8 @@ public class CookingtipBoardServiceImpl implements ICookingtipBoardService{
 	@Transactional
 	@Override
 	public boolean updateCookingTipBoard(CommonBoardDTO commonBoard, CookingtipBoardDTO cookingtip) {
-		boolean commonResult = commonMapper.updateCommonBoard(commonBoard) == 1;
 		boolean cookingResult = cookingtipMapper.updateCookingtip(cookingtip) == 1;
+		boolean commonResult = commonMapper.updateCommonBoard(commonBoard) == 1;
 		boolean totalResult = cookingResult == commonResult;
 		
 		return totalResult;
@@ -59,8 +59,8 @@ public class CookingtipBoardServiceImpl implements ICookingtipBoardService{
 	@Transactional
 	@Override
 	public boolean removeCookingTipBoard(int bno) {
-		boolean commonResult = commonMapper.deleteCommonBoard(bno) == 1;
 		boolean cookingResult = cookingtipMapper.deleteCookingtip(bno) == 1;
+		boolean commonResult = commonMapper.deleteCommonBoard(bno) == 1;
 		boolean totalResult = cookingResult == commonResult;
 		
 		return totalResult;
