@@ -1,0 +1,30 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.momuk.mapper.IngredientMapper">
+
+	<insert id="insertIngredient">
+        INSERT INTO ingredient (bno, ingredientId, ingredientOrder, name, measurement)
+        VALUES (common_board_seq.currval, ingredientId_seq.nextval, #{ingredientOrder}, #{name}, #{measurement})
+    </insert>
+    
+    <select id="selectIngredientByBno" resultType="kr.co.momuk.domain.DetailDTO">
+    	SELECT ingredientOrder, name, measurement
+    	FROM ingredient
+    	WHERE bno = #{bno}
+    </select>
+    
+    <update id="updateIngredient">
+    	UPDATE ingredient
+    	SET ingredientOrder = #{ingredientOrder}, name = #{name}, measurement = #{measurement}
+    	WHERE bno = #{bno}
+    </update>
+    
+    <delete id="deleteIngredient">
+    	DELETE
+		FROM ingredient
+		WHERE bno = #{bno}
+    </delete>
+   
+	
+</mapper>

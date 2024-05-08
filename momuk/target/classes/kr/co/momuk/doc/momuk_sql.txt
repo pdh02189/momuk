@@ -80,7 +80,6 @@ CREATE TABLE store_board
 (
    bno number(10,0) NOT NULL,
    productId varchar2(10) NOT NULL UNIQUE,
-   boardId number(2,0) NOT NULL,
    category varchar2(30),
    price number NOT NULL,
    shippingFee number DEFAULT 0,
@@ -94,7 +93,6 @@ add constraint store_board_bno_PK primary key(bno);
 CREATE TABLE recipe_board
 (
    bno number(10,0) NOT NULL,
-   boardId number(2,0),
    infotext varchar2(500),
    category varchar2(30) NOT NULL,
    serving varchar2(30) NOT NULL,
@@ -111,7 +109,6 @@ add constraint recipe_board_bno_PK primary key(bno);
 CREATE TABLE cookingtip_board
 (
    bno number(10,0) NOT NULL,
-   boardId number(2,0),
    category varchar2(30) NOT NULL,
    content varchar2(4000) NOT NULL
 );
@@ -123,7 +120,6 @@ add constraint cookingtip_board_bno_PK primary key(bno);
 CREATE TABLE event_board
 (
    bno number(10,0) NOT NULL,
-   boardId number(2,0),
    startdate date NOT NULL,
    enddate date NOT NULL,
    content varchar2(4000) NOT NULL
@@ -221,6 +217,16 @@ start with 1
 nomaxvalue;
 
 create sequence productId_seq
+increment by 1
+start with 1
+nomaxvalue;
+
+create sequence ingredientId_seq
+increment by 1
+start with 1
+nomaxvalue;
+
+create sequence stepId_seq
 increment by 1
 start with 1
 nomaxvalue;

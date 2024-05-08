@@ -1,6 +1,7 @@
 package kr.co.momuk.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -23,4 +24,13 @@ public class DetailDTO {
     private Date enddate;
     
     private String content;
+    
+    private String infotext;
+    private String serving;
+    private String difficulty;
+    private String cookingtime;
+    private int heartcnt;
+    
+    private List<IngredientDTO> ingredientList;
+    private List<RecipeStepDTO> recipestepList;
 }
