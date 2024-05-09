@@ -91,6 +91,9 @@ $(document).ready(function() {
 		}
 		formData.append("uploadFile", firstFile);
 
+		// redirectPath 값 설정
+	    var redirectPath = "cookingtip"; 
+	    formData.append("redirectPath", redirectPath);
 		    
 		$.ajax({
 			url: "${contextPath}/uploadAjaxAction",

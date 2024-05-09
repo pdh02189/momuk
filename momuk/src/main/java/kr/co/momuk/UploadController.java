@@ -149,7 +149,7 @@ public class UploadController {
 //		return new ResponseEntity<>(attachList, HttpStatus.OK);
 //	}	
 	@PostMapping(value = "/uploadAjaxAction", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public RedirectView uploadAjaxPost(MultipartFile[] uploadFile, HttpSession session) {
+	public RedirectView uploadAjaxPost(MultipartFile[] uploadFile, HttpSession session,  @RequestParam("redirectPath") String redirectPath) {
 	    log.info("update ajax post.......................");
 	    List<CommonBoardDTO> attachList = new ArrayList<>();
 
@@ -207,8 +207,11 @@ public class UploadController {
 	    // 세션에 FILENAME 저장
 	    session.setAttribute("filename", attachList.get(0).getFilename());
 
+	    // 리다이렉트 경로 생성
+	    String redirectUrl = "/" + redirectPath + "/write";
+
 	    // 글 등록 페이지로 리다이렉트
-	    return new RedirectView("/cookingtip/write");
+	    return new RedirectView(redirectUrl);
 	}
 	
 

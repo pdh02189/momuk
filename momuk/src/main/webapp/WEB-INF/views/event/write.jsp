@@ -96,7 +96,11 @@ $(document).ready(function() {
 		    return false;
 		}
 		formData.append("uploadFile", firstFile);
-
+		
+		// redirectPath 값 설정
+	    var redirectPath = "event"; 
+	    formData.append("redirectPath", redirectPath);
+		    
 		    
 		$.ajax({
 			url: "${contextPath}/uploadAjaxAction",

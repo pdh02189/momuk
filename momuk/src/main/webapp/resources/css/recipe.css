@@ -56,8 +56,11 @@
 
 .comm_write_con .comm_write_box .cont_box .recipe_step{position: relative; width: 100%;}
 .comm_write_con .comm_write_box .cont_box .recipe_step li{position: relative; width: 100%; display: flex; align-items: center; flex-wrap: wrap;}
-.comm_write_con .comm_write_box .cont_box .recipe_step li textarea{width: calc(100% - 130px);}
-.comm_write_con .comm_write_box .cont_box .recipe_step li .imgBox{margin-left: 10px;}
+.comm_write_con .comm_write_box .cont_box .recipe_step li:not(:first-child){margin-top: 10px;}
+.comm_write_con .comm_write_box .cont_box .recipe_step li textarea{width: calc(100% - 188px);}
+.comm_write_con .comm_write_box .cont_box .recipe_step li .imgBox{margin: 0 10px;}
+.comm_write_con .comm_write_box .cont_box .recipe_step li .btn_step_del{width: 48px; height: 120px; border-radius: 6px; border: 1px solid #000; background: url(../images/ic_list_del.png) center no-repeat;}
+
 
 .comm_write_con .comm_write_box .cont_box .btn_step_plus{margin-top: 15px; font-size: 16px; font-weight: 600; background: #fff; display: flex; align-items: center;}
 .comm_write_con .comm_write_box .cont_box .btn_step_plus::before{content: ''; display: flex; width: 16px; height: 16px; background: url(../images/ic_list_plus.png) center no-repeat; margin-right: 10px;}
@@ -114,7 +117,8 @@
     .comm_write_con .comm_write_box .cont_box .btn_list_plus,
     .comm_write_con .comm_write_box .cont_box .btn_step_plus{font-size: 15px;}
 
-    .comm_write_con .comm_write_box .cont_box .recipe_step li textarea{width: calc(100% - 100px); height: 90px;}
+    .comm_write_con .comm_write_box .cont_box .recipe_step li textarea{width: calc(100% - 130px); height: 90px;}
+    .comm_write_con .comm_write_box .cont_box .recipe_step li .btn_list_del{border: none; width: 20px; height: 20px;}
     .comm_write_box .cont_box .recipe_step .imgBox,
     .comm_write_box .cont_box .recipe_step .imgBox label{width: 90px !important; height: 90px; font-size: 14px;}
     .comm_write_box .cont_box .recipe_step .imgBox label img{width: 36px;}
