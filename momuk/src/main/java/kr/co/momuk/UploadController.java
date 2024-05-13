@@ -45,8 +45,8 @@ import net.coobird.thumbnailator.Thumbnails;
 public class UploadController {
 	
 	private String uploadPath
-//		= "C:\\Users\\pdh02\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\fileUpload";
-		= "C:\\Users\\hanul\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\fileUpload";
+		= "C:\\Users\\pdh02\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\fileUpload";
+//		= "C:\\Users\\hanul\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\fileUpload";
 	
 	public void uploadForm() {
 		log.info("upload form..........................");
@@ -149,7 +149,7 @@ public class UploadController {
 //		return new ResponseEntity<>(attachList, HttpStatus.OK);
 //	}	
 	@PostMapping(value = "/uploadAjaxAction", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public RedirectView uploadAjaxPost(MultipartFile[] uploadFile, HttpSession session,  @RequestParam("redirectPath") String redirectPath) {
+	public RedirectView uploadAjaxPost(MultipartFile[] uploadFile, HttpSession session, @RequestParam("redirectPath") String redirectPath) {
 	    log.info("update ajax post.......................");
 	    List<CommonBoardDTO> attachList = new ArrayList<>();
 
@@ -158,7 +158,7 @@ public class UploadController {
 	    File uploadFolder = new File(uploadPath, getFolder());
 	    log.info("uploadForder path : " + uploadFolder);
 
-	    if(uploadFolder.exists() == false) {
+	    if (!uploadFolder.exists()) {
 	        uploadFolder.mkdirs();
 	    }
 
@@ -189,7 +189,7 @@ public class UploadController {
 	            attachFileDTO.setUuid(uuid.toString());
 	            attachFileDTO.setUploadpath(uploadFolderPath.replace("\\", "/"));
 
-	            if(checkImageType(saveFile)) {
+	            if (checkImageType(saveFile)) {
 	                File thumbnail = new File(uploadFolder, "s_" + uploadFileName);
 	                Thumbnails.of(saveFile).size(300, 300).toFile(thumbnail);
 	            }
@@ -200,12 +200,13 @@ public class UploadController {
 	        }
 	    }
 
-	    // 세션에 UUID 저장
+	    // 세션에 UUID, UPLOADPATH, FILENAME 저장
 	    session.setAttribute("uuid", attachList.get(0).getUuid());
-	    // 세션에 UPLOADPATH 저장
 	    session.setAttribute("uploadpath", attachList.get(0).getUploadpath());
-	    // 세션에 FILENAME 저장
 	    session.setAttribute("filename", attachList.get(0).getFilename());
+
+	    // 조리순서 이미지 관련 정보 세션에 저장
+	    session.setAttribute("recipeStepImages", attachList);
 
 	    // 리다이렉트 경로 생성
 	    String redirectUrl = "/" + redirectPath + "/write";
@@ -261,8 +262,8 @@ public class UploadController {
     	try {
     		// 서버에 저장할 경로
 //    		String uploadDirectory = context.getServletContext().getRealPath("/resources/assets/images/upload"); 
-//    		String uploadDirectory = "C:\\Users\\pdh02\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\assets\\images\\upload"; 
-    		String uploadDirectory = "C:\\Users\\hanul\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\assets\\images\\upload"; 
+    		String uploadDirectory = "C:\\Users\\pdh02\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\assets\\images\\upload"; 
+//    		String uploadDirectory = "C:\\Users\\hanul\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\assets\\images\\upload"; 
     		
     		// 업로드 된 파일의 이름
     		String originalFileName = file.getOriginalFilename();

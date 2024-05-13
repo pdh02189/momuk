@@ -50,7 +50,7 @@
 	                   cb.uuid,
 	                   cb.uploadpath,
 	                   cb.filename,
-	                   rb.heartcnt
+	                   rb.heartcnt,
 	                   rownum AS rn
 	            FROM common_board cb
 	            INNER JOIN recipe_board rb ON cb.bno = rb.bno
@@ -58,6 +58,7 @@
 	              AND cb.boardId = 2
 	        )
 	        WHERE rn > (#{pageNum} - 1) * #{amount}
+	        ORDER BY bno DESC
 	    ]]>
     </select>
 	

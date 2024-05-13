@@ -16,4 +16,6 @@ public class CommonBoardDTO {
     private String uuid;
     private String uploadpath;
     private String filename;
+    
+    
 }
