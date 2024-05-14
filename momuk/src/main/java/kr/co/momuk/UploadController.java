@@ -45,8 +45,8 @@ import net.coobird.thumbnailator.Thumbnails;
 public class UploadController {
 	
 	private String uploadPath
-		= "C:\\Users\\pdh02\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\fileUpload";
-//		= "C:\\Users\\hanul\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\fileUpload";
+//		= "C:\\Users\\pdh02\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\fileUpload";
+		= "C:\\Users\\hanul\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\fileUpload";
 	
 	public void uploadForm() {
 		log.info("upload form..........................");
@@ -150,13 +150,12 @@ public class UploadController {
 //	}	
 	@PostMapping(value = "/uploadAjaxAction", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public RedirectView uploadAjaxPost(MultipartFile[] uploadFile, HttpSession session, @RequestParam("redirectPath") String redirectPath) {
-	    log.info("update ajax post.......................");
+	    log.info("upload ajax post.......................");
+
 	    List<CommonBoardDTO> attachList = new ArrayList<>();
-
 	    String uploadFolderPath = getFolder();
-
-	    File uploadFolder = new File(uploadPath, getFolder());
-	    log.info("uploadForder path : " + uploadFolder);
+	    File uploadFolder = new File(uploadPath, uploadFolderPath);
+	    log.info("uploadFolder path : " + uploadFolder);
 
 	    if (!uploadFolder.exists()) {
 	        uploadFolder.mkdirs();
@@ -169,23 +168,19 @@ public class UploadController {
 	        log.info("Upload file content type : " + multipartFile.getContentType());
 
 	        CommonBoardDTO attachFileDTO = new CommonBoardDTO();
-
 	        String uploadFileName = multipartFile.getOriginalFilename();
-
 	        uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\") + 1);
 	        log.info("only file name : " + uploadFileName);
 
 	        attachFileDTO.setFilename(uploadFileName);
 
 	        UUID uuid = UUID.randomUUID();
-
 	        uploadFileName = uuid.toString() + "_" + uploadFileName;
 
 	        try {
 	            File saveFile = new File(uploadFolder, uploadFileName);
 	            multipartFile.transferTo(saveFile);
 
-	            // UUID와 업로드 경로 설정
 	            attachFileDTO.setUuid(uuid.toString());
 	            attachFileDTO.setUploadpath(uploadFolderPath.replace("\\", "/"));
 
@@ -200,18 +195,10 @@ public class UploadController {
 	        }
 	    }
 
-	    // 세션에 UUID, UPLOADPATH, FILENAME 저장
-	    session.setAttribute("uuid", attachList.get(0).getUuid());
-	    session.setAttribute("uploadpath", attachList.get(0).getUploadpath());
-	    session.setAttribute("filename", attachList.get(0).getFilename());
-
-	    // 조리순서 이미지 관련 정보 세션에 저장
+	    // 세션에 조리 순서 이미지 관련 정보 저장
 	    session.setAttribute("recipeStepImages", attachList);
 
-	    // 리다이렉트 경로 생성
 	    String redirectUrl = "/" + redirectPath + "/write";
-
-	    // 글 등록 페이지로 리다이렉트
 	    return new RedirectView(redirectUrl);
 	}
 	
@@ -262,8 +249,8 @@ public class UploadController {
     	try {
     		// 서버에 저장할 경로
 //    		String uploadDirectory = context.getServletContext().getRealPath("/resources/assets/images/upload"); 
-    		String uploadDirectory = "C:\\Users\\pdh02\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\assets\\images\\upload"; 
-//    		String uploadDirectory = "C:\\Users\\hanul\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\assets\\images\\upload"; 
+//    		String uploadDirectory = "C:\\Users\\pdh02\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\assets\\images\\upload"; 
+    		String uploadDirectory = "C:\\Users\\hanul\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\assets\\images\\upload"; 
     		
     		// 업로드 된 파일의 이름
     		String originalFileName = file.getOriginalFilename();

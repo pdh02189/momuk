@@ -32,17 +32,16 @@ public class RecipeBoardServiceImpl implements IRecipeBoardService{
 	private CommonBoardMapper commonMapper;
 	
 	// 레시피 등록
-	@Transactional
 	@Override
-	public void insertRecipeBoard(CommonBoardDTO commonBoard, RecipeBoardDTO recipe, List<IngredientDTO> ingredients,
-			List<RecipeStepDTO> recipesteps) {
-		commonBoard.setBoardId(2);
-		commonMapper.insertCommonBoard(commonBoard);
-		int bno = commonBoard.getBno();
-		recipe.setBno(bno);
-		recipeMapper.insertRecipe(recipe);
-		
-		 for (IngredientDTO ingredient : ingredients) {
+	@Transactional
+	public void insertRecipeBoard(CommonBoardDTO commonBoard, RecipeBoardDTO recipe, List<IngredientDTO> ingredients, List<RecipeStepDTO> recipesteps) {
+	    commonBoard.setBoardId(2);
+	    commonMapper.insertCommonBoard(commonBoard);
+	    int bno = commonBoard.getBno();
+	    recipe.setBno(bno);
+	    recipeMapper.insertRecipe(recipe);
+
+	    for (IngredientDTO ingredient : ingredients) {
 	        ingredient.setBno(bno);
 	        ingredientMapper.insertIngredient(ingredient);
 	    }

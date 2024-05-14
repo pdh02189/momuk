@@ -56,9 +56,10 @@
 	            INNER JOIN recipe_board rb ON cb.bno = rb.bno
 	            WHERE rownum <= #{pageNum} * #{amount}
 	              AND cb.boardId = 2
+	              ORDER BY bno DESC
 	        )
 	        WHERE rn > (#{pageNum} - 1) * #{amount}
-	        ORDER BY bno DESC
+	        
 	    ]]>
     </select>
 	

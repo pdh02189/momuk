@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.co.momuk.domain.CommonBoardDTO;
 import kr.co.momuk.domain.Criteria;
+import kr.co.momuk.domain.DetailDTO;
 import kr.co.momuk.domain.IngredientDTO;
 import kr.co.momuk.domain.PageDTO;
 import kr.co.momuk.domain.RecipeBoardDTO;
@@ -48,29 +49,25 @@ public class RecipeController {
 	                        HttpSession session) throws Exception {
 	    log.info("write post.....................");
 
-	    // 세션에서 UUID 값 가져오기
 	    String uuid = (String) session.getAttribute("uuid");
-	    // 세션에서 UPLOADPATH 값 가져오기
 	    String uploadpath = (String) session.getAttribute("uploadpath");
-	    // 세션에서 FILENAME 값 가져오기
 	    String filename = (String) session.getAttribute("filename");
 
-	    // commonBoard 객체에 UUID 설정
 	    commonBoard.setUuid(uuid);
-	    // commonBoard 객체에 UPLOADPATH 설정
 	    commonBoard.setUploadpath(uploadpath);
-	    // commonBoard 객체에 FILENAME 설정
 	    commonBoard.setFilename(filename);
 
-	    // 공통 게시판 정보 등록
-	    recipeService.insertRecipeBoard(commonBoard, recipe, extractIngredients(params), extractRecipeSteps(params, uploadFiles));
+	    // 세션에서 조리 순서 이미지 관련 정보 가져오기
+	    List<CommonBoardDTO> recipeStepImages = (List<CommonBoardDTO>) session.getAttribute("recipeStepImages");
 
-	    // 세션 정보 삭제
+	    recipeService.insertRecipeBoard(commonBoard, recipe, extractIngredients(params), extractRecipeSteps(params, recipeStepImages));
+
 	    session.removeAttribute("uuid");
 	    session.removeAttribute("uploadpath");
 	    session.removeAttribute("filename");
+	    session.removeAttribute("recipeStepImages");
 
-	    return "redirect:/recipe/list"; // 등록 후 게시판 목록 페이지로 이동
+	    return "redirect:/recipe/list";
 	}
 		
 	private List<IngredientDTO> extractIngredients(Map<String, String> params) {
@@ -92,31 +89,44 @@ public class RecipeController {
 		return ingredients;
 	}
 	
-	private List<RecipeStepDTO> extractRecipeSteps(Map<String, String> params, MultipartFile[] uploadFiles) {
+	private List<RecipeStepDTO> extractRecipeSteps(Map<String, String> params, List<CommonBoardDTO> recipeStepImages) {
 	    List<RecipeStepDTO> recipeSteps = new ArrayList<>();
-	    // 파라미터에서 조리 순서 정보 추출
 	    for (Map.Entry<String, String> entry : params.entrySet()) {
 	        if (entry.getKey().startsWith("step_instruction")) {
 	            String indexStr = entry.getKey().substring("step_instruction_".length());
 	            int index = Integer.parseInt(indexStr);
 	            String instruction = entry.getValue();
 
-	            // 해당 단계의 이미지 파일 추출
-	            MultipartFile uploadFile = null;
-	            if (uploadFiles != null && index < uploadFiles.length) {
-	                uploadFile = uploadFiles[index];
-	            }
-
 	            RecipeStepDTO recipeStep = new RecipeStepDTO();
 	            recipeStep.setInstruction(instruction);
 	            recipeStep.setStepOrder(index);
-	            recipeStep.setUploadFile(uploadFile); // 이미지 파일 설정
+
+	            // 해당 단계의 이미지 파일 설정
+	            if (recipeStepImages != null && index - 1 < recipeStepImages.size()) {
+	                CommonBoardDTO stepImage = recipeStepImages.get(index - 1);
+	                recipeStep.setUuid(stepImage.getUuid());
+	                recipeStep.setUploadpath(stepImage.getUploadpath());
+	                recipeStep.setFilename(stepImage.getFilename());
+	            }
+
 	            recipeSteps.add(recipeStep);
 	        }
 	    }
 	    return recipeSteps;
 	}
 	
+	// 상세
+	@RequestMapping(value={"/detail", "/modify"}, method = RequestMethod.GET)
+	public void read(@RequestParam("bno") int bno, @ModelAttribute("cri") Criteria cri, Model model) throws Exception {
+		log.info("show detail.....................");
+		
+		// 서비스에서 상세 정보를 가져옴
+	    DetailDTO detailDTO = recipeService.detailRecipeBoard(bno);
+	    
+	    // 모델에 데이터 추가
+	    model.addAttribute("recipe", detailDTO);
+	}
+		
 	// 목록 전체
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public void selectAllEvent(Criteria cri, Model model) throws Exception {

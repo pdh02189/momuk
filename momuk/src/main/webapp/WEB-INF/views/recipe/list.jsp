@@ -169,7 +169,7 @@
                 </div>
             </div>
             
-            <form id="actionForm" action="${ctx }/cookingtip/list" method="get">
+            <form id="actionForm" action="${ctx }/recipe/list" method="get">
             	<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
             	<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
             </form>
