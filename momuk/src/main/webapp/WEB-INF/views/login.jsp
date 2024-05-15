@@ -11,13 +11,14 @@
                     <h3>로그인</h3>
                 </div>
                 <div class="login_box">
-                    <form>
+                    <form action="#" method="post">
                         <div class="write_box input_id">
-                            <input type="text" placeholder="아이디">
+                            <input type="text" placeholder="아이디" name="id">
                         </div>
                         <div class="write_box input_pw">
-                            <input type="password" placeholder="비밀번호">
+                            <input type="password" placeholder="비밀번호" name="pw">
                         </div>
+                    	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                         <div class="id_save">
                             <input type="checkbox" id="id_check">
                             <label for="id_check" class="font_gray">

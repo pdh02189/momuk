@@ -11,7 +11,7 @@
                     <h3>회원가입</h3>
                 </div>
                 <div class="join_box">
-                    <form>
+                    <form role="form" action="${ctx}/join" method="post">
                         <div class="basic_info">
                             <div class="join_tit">
                                 <h4>기본정보</h4>
@@ -23,7 +23,7 @@
                                         <h3 class="important">아이디</h3>
                                     </div>
                                     <div class="cont_box">
-                                        <input type="text" class="w500" placeholder="영문소문자/숫자, 4~16자">
+                                        <input type="text" class="w500" placeholder="영문소문자/숫자, 4~16자" name="id">
                                         <span class="idcheck"><strong>asdfasdf</strong>(은)는 사용 가능한 아이디 입니다.</span>
                                     </div>
                                 </div>
@@ -32,7 +32,7 @@
                                         <h3 class="important">비밀번호</h3>
                                     </div>
                                     <div class="cont_box">
-                                        <input type="password" class="w500" placeholder="영문(대소문자구분)/숫자/특수문자 중 2가지 이상조합, 8자~16자">
+                                        <input type="password" class="w500" placeholder="영문(대소문자구분)/숫자/특수문자 중 2가지 이상조합, 8자~16자" name="pw">
                                     </div>
                                 </div>
                                 <div class="comm_write_box">
@@ -49,7 +49,7 @@
                                         <h3 class="important">이름</h3>
                                     </div>
                                     <div class="cont_box">
-                                        <input type="text" class="w500">
+                                        <input type="text" class="w500" name="name">
                                     </div>
                                 </div>
                                 <div class="comm_write_box">
@@ -59,11 +59,11 @@
                                     <div class="cont_box">
                                         <div class="address">
                                             <div class="address_box w500">
-                                                <input type="text" class="w390">
+                                                <input type="text" class="w390" name="zipcode">
                                                 <button type="button" class="w100">우편번호</button>
                                             </div>
-                                            <input type="text" class="w500" placeholder="기본주소">
-                                            <input type="text" class="w500" placeholder="나머지주소">
+                                            <input type="text" class="w500" placeholder="기본주소" name="streetAddress">
+                                            <input type="text" class="w500" placeholder="나머지주소" name="detailAddress">
                                         </div>
                                     </div>
                                 </div>
@@ -72,7 +72,7 @@
                                         <h3>휴대전화</h3>
                                     </div>
                                     <div class="cont_box tel">
-                                        <select class="w100">
+                                        <select class="w100" id="telPrefix">
                                             <option value="1">010</option>
                                             <option value="2">011</option>
                                             <option value="3">016</option>
@@ -81,9 +81,10 @@
                                             <option value="6">019</option>
                                         </select>
                                         <span class="ml10 mr10">-</span>
-                                        <input type="text" class="w100">
+                                        <input type="text" class="w100" id="firstNumber" >
                                         <span class="ml10 mr10">-</span>
-                                        <input type="text" class="w100">
+                                        <input type="text" class="w100" id="secondNumber">
+                                        <input type="hidden" id="tel" name="tel">
                                     </div>
                                 </div>
                                 <div class="comm_write_box">
@@ -93,32 +94,32 @@
                                     <div class="cont_box">
                                         <p class="state">
                                             <label>
-                                                <input type="radio" name="gender" checked="">
+                                                <input type="radio" name="gender" checked="" value="X">
                                                 <span>선택안함</span>
                                             </label>
                                         </p>
                                         <p class="state">
                                             <label>
-                                                <input type="radio" name="gender">
+                                                <input type="radio" name="gender" value="M">
                                                 <span>남성</span>
                                             </label>
                                         </p>
                                         <p class="state">
                                             <label>
-                                                <input type="radio" name="gender">
+                                                <input type="radio" name="gender" value="W">
                                                 <span>여성</span>
                                             </label>
                                         </p>
                                     </div>
                                 </div>
-                                <div class="comm_write_box">
-                                    <div class="tit_box">
-                                        <h3>생년월일</h3>
-                                    </div>
-                                    <div class="cont_box">
-                                        <input type="date" class="w390" max="9999-12-31">
-                                    </div>
-                                </div>
+<!--                                 <div class="comm_write_box"> -->
+<!--                                     <div class="tit_box"> -->
+<!--                                         <h3>생년월일</h3> -->
+<!--                                     </div> -->
+<!--                                     <div class="cont_box"> -->
+<!--                                         <input type="date" class="w390" max="9999-12-31" name="birth"> -->
+<!--                                     </div> -->
+<!--                                 </div> -->
                             </div>
                         </div>
 
@@ -168,7 +169,35 @@
                         <div class="joinbtn">
                             <button type="submit" class="btn_red">회원가입</button>
                         </div>
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                     </form>
                 </div>
             </div>
+<script>
+$(document).ready(function() {
+	var formObj = $("form[role='form']");
+	
+	$("button[type='submit']").on("click", function(e){
+		 e.preventDefault();
+
+	     formObj.submit();
+
+	});
+});
+</script>            
+<script>
+    // select와 input 값을 조합하여 hidden input에 설정하는 함수
+    function combineTel() {
+        var telPrefix = document.getElementById("telPrefix").value;
+        var firstNumber = document.getElementById("firstNumber").value;
+        var secondNumber = document.getElementById("secondNumber").value;
+        var combinedTel = telPrefix + "-" + firstNumber + "-" + secondNumber;
+        document.getElementById("tel").value = combinedTel;
+    }
+
+    // 사용자가 select 또는 input 값을 변경할 때마다 combineTel 함수 호출
+    document.getElementById("telPrefix").addEventListener("change", combineTel);
+    document.getElementById("firstNumber").addEventListener("input", combineTel);
+    document.getElementById("secondNumber").addEventListener("input", combineTel);
+</script>
 <%@ include file="include/footer.jsp" %>

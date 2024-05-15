@@ -366,7 +366,10 @@ $(document).ready(function() {
                 // 이미지를 서버에 전송
                 var formData = new FormData();
                 formData.append("uploadFile1", file);
-                formData.append("redirectPath", "recipe"); // 리다이렉트 경로 설정
+                
+             	// redirectPath 값 설정
+        	    var redirectPath = "recipe"; 
+        	    formData.append("redirectPath", redirectPath);
                 
                 $.ajax({
                     url: "${contextPath}/uploadRecipeStepImage",

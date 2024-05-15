@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -18,6 +19,21 @@
 </head>
 <body>
 	<c:set var="ctx" value="${pageContext.request.contextPath == '/' ? '': pageContext.request.contextPath}" scope="application"/>
+	<sec:authorize access="isAuthenticated()">
+
+    <sec:authentication property="principal" var="principal" />
+
+    <P>${principal}</P>
+
+    <form action="<c:url value='/logout' />" method="post">
+
+        <sec:csrfInput/>
+
+        <button type="submit">로그아웃</button>
+
+    </form>
+
+</sec:authorize>
     <div id="wrapper"> <!-- 로그인 시 login 관리자 로그인 시 admin 클래스 붙음 -->
     	<!-- 공유하기 팝업-->
         <div class="share_popup" style="display: none;">
@@ -84,7 +100,10 @@
                             <a href="${ctx }/login">로그인</a>
                         </li>
                         <li class="logout">
-                            <a href="#">로그아웃</a>
+                            <form method="post" action="/logout">
+						        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+						        <input type="submit" value="로그아웃" />
+						    </form>
                         </li>
                     </ul>
                     <ul class="my">

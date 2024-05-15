@@ -26,7 +26,8 @@ header .header_inner .my_wrap .top{display: flex; justify-content: flex-end; mar
 header .header_inner .my_wrap .top li{margin-left: 10px; position: relative; display: flex; align-items: center;}
 header .header_inner .my_wrap .top li:not(:first-child)::before{content: ''; width: 1px; height: 10px; margin-right: 10px; background-color: #eaeaea; display: flex;}
 header .header_inner .my_wrap .top li.logout{display: none;}
-header .header_inner .my_wrap .top li a{font-size: 13px; font-weight: 600;}
+header .header_inner .my_wrap .top li a,
+header .header_inner .my_wrap .top li input{font-size: 13px; font-weight: 600; border: 0; background: none;}
 header .header_inner .my_wrap .top li.join a{color: #f95353;}
 
 /* 로그인 헤더 */

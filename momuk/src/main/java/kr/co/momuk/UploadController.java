@@ -319,7 +319,7 @@ public class UploadController {
         session.setAttribute("recipeStepImages", recipeStepImages);
 
         // 글 작성 페이지로 리다이렉트
-        return "redirect:/write";
+        return "redirect:/recipe/write";
     }
     
 }
