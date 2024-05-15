@@ -57,18 +57,22 @@ public class RecipeBoardServiceImpl implements IRecipeBoardService{
 	@Override
 	public DetailDTO detailRecipeBoard(int bno) {
 		commonMapper.updateViewCnt(bno);
-		
-		// 레시피 상세 정보 가져오기
+
+	    // 레시피 상세 정보 가져오기
 	    DetailDTO detailDTO = recipeMapper.selectRecipeByBno(bno);
-	    
+	    System.out.println("DetailDTO: " + detailDTO);
+
 	    // 레시피 상세 정보에 재료 리스트 설정
 	    List<IngredientDTO> ingredientList = ingredientMapper.selectIngredientByBno(bno);
-	    detailDTO.setIngredientList(ingredientList);
-	    
+	    System.out.println("Ingredient List: " + ingredientList);
+
 	    // 레시피 상세 정보에 조리순서 리스트 설정
 	    List<RecipeStepDTO> recipestepList = stepMapper.selectRecipeStepByBno(bno);
+	    System.out.println("Recipe Step List: " + recipestepList);
+
+	    detailDTO.setIngredientList(ingredientList);
 	    detailDTO.setRecipestepList(recipestepList);
-	    
+
 	    return detailDTO;
 	}
 

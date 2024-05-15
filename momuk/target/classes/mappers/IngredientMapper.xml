@@ -8,7 +8,7 @@
         VALUES (common_board_seq.currval, ingredientId_seq.nextval, #{ingredientOrder}, #{name}, #{measurement})
     </insert>
     
-    <select id="selectIngredientByBno" resultType="kr.co.momuk.domain.DetailDTO">
+    <select id="selectIngredientByBno" resultType="kr.co.momuk.domain.IngredientDTO">
     	SELECT ingredientOrder, name, measurement
     	FROM ingredient
     	WHERE bno = #{bno}

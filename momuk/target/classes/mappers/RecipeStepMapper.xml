@@ -8,7 +8,7 @@
         VALUES (common_board_seq.currval, stepId_seq.nextval, #{stepOrder}, #{instruction}, #{uuid}, #{uploadpath}, #{filename})
     </insert>
     
-    <select id="selectRecipeStepByBno" resultType="kr.co.momuk.domain.DetailDTO">
+    <select id="selectRecipeStepByBno" resultType="kr.co.momuk.domain.RecipeStepDTO">
     	SELECT stepOrder, instruction, uuid, uploadpath, filename
     	FROM recipe_step
     	WHERE bno = #{bno}

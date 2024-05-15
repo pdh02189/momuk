@@ -49,6 +49,7 @@ public class RecipeController {
 	                        HttpSession session) throws Exception {
 	    log.info("write post.....................");
 
+	    // 대표 이미지 정보
 	    String uuid = (String) session.getAttribute("uuid");
 	    String uploadpath = (String) session.getAttribute("uploadpath");
 	    String filename = (String) session.getAttribute("filename");
@@ -60,8 +61,27 @@ public class RecipeController {
 	    // 세션에서 조리 순서 이미지 관련 정보 가져오기
 	    List<CommonBoardDTO> recipeStepImages = (List<CommonBoardDTO>) session.getAttribute("recipeStepImages");
 
+	    // 조리 순서 이미지가 첨부되었는지 여부 확인
+	    boolean stepImagesAttached = false;
+	    if (recipeStepImages != null && !recipeStepImages.isEmpty()) {
+	        for (CommonBoardDTO image : recipeStepImages) {
+	            if (image.getUuid() != null) {
+	                stepImagesAttached = true;
+	                break;
+	            }
+	        }
+	    }
+
+	    // 조리 순서 이미지가 첨부되지 않은 경우 대표 이미지 정보 사용하지 않도록 수정
+	    if (!stepImagesAttached) {
+	        session.removeAttribute("uuid");
+	        session.removeAttribute("uploadpath");
+	        session.removeAttribute("filename");
+	    }
+
 	    recipeService.insertRecipeBoard(commonBoard, recipe, extractIngredients(params), extractRecipeSteps(params, recipeStepImages));
 
+	    // 대표 이미지 정보 세션에서 삭제
 	    session.removeAttribute("uuid");
 	    session.removeAttribute("uploadpath");
 	    session.removeAttribute("filename");

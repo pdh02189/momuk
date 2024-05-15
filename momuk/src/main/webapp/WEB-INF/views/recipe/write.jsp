@@ -160,12 +160,17 @@ $(document).ready(function() {
                                 </div>
                                 <div class="cont_box">
                                     <select class="w220" name="category">
-                                        <option value="0">카테고리 선택</option>
-                                        <option value="1">신선식품</option>
-                                        <option value="2">간편식</option>
-                                        <option value="3">가공식품</option>
-                                        <option value="4">주방용품</option>
-                                        <option value="5">주방가전</option>
+                                        <option>카테고리 선택</option>
+                                        <option value="메인요리">메인요리</option>
+                                        <option value="밑반찬">밑반찬</option>
+                                        <option value="국/탕">국/탕</option>
+                                        <option value="찌개">찌개</option>
+                                        <option value="디저트">디저트</option>
+                                        <option value="면/만두">면/만두</option>
+                                        <option value="밥/죽/떡">밥/죽/떡</option>
+                                        <option value="양식">양식</option>
+                                        <option value="빵/과자">빵/과자</option>
+                                        <option value="기타">기타</option>
                                     </select>
                                 </div>
                             </div>
@@ -175,33 +180,33 @@ $(document).ready(function() {
                                 </div>
                                 <div class="cont_box recipe_info">
                                     <select class="w220" name="serving">
-                                        <option value="0">분량 선택</option>
-                                        <option value="1">1인분</option>
-                                        <option value="2">2인분</option>
-                                        <option value="3">3인분</option>
-                                        <option value="4">4인분</option>
-                                        <option value="5">5인분</option>
-                                        <option value="6">6인분 이상</option>
+                                        <option>분량 선택</option>
+                                        <option value="1인분">1인분</option>
+                                        <option value="2인분">2인분</option>
+                                        <option value="3인분">3인분</option>
+                                        <option value="4인분">4인분</option>
+                                        <option value="5인분">5인분</option>
+                                        <option value="6인분 이상">6인분 이상</option>
                                     </select>
                                     <select class="w220" name="difficulty">
-                                        <option value="0">난이도 선택</option>
-                                        <option value="1">아무나</option>
-                                        <option value="2">초급</option>
-                                        <option value="3">중급</option>
-                                        <option value="4">고급</option>
-                                        <option value="5">요리왕</option>
+                                        <option>난이도 선택</option>
+                                        <option value="아무나">아무나</option>
+                                        <option value="초급">초급</option>
+                                        <option value="중급">중급</option>
+                                        <option value="고급">고급</option>
+                                        <option value="요리왕">요리왕</option>
                                     </select>
                                     <select class="w220" name="cookingtime">
-                                        <option value="0">소요시간 선택</option>
-                                        <option value="1">5분이내</option>
-                                        <option value="2">10분이내</option>
-                                        <option value="3">15분이내</option>
-                                        <option value="4">20분이내</option>
-                                        <option value="5">30분이내</option>
-                                        <option value="6">60분이내</option>
-                                        <option value="7">90분이내</option>
-                                        <option value="8">2시간이내</option>
-                                        <option value="9">2시간이상</option>
+                                        <option>소요시간 선택</option>
+                                        <option value="5분이내">5분이내</option>
+                                        <option value="10분이내">10분이내</option>
+                                        <option value="15분이내">15분이내</option>
+                                        <option value="20분이내">20분이내</option>
+                                        <option value="30분이내">30분이내</option>
+                                        <option value="60분이내">60분이내</option>
+                                        <option value="90분이내">90분이내</option>
+                                        <option value="2시간이내">2시간이내</option>
+                                        <option value="2시간이상">2시간이상</option>
                                     </select>
                                 </div>
                             </div>
@@ -243,7 +248,7 @@ $(document).ready(function() {
 		                                        <label>
 		                                            <img src="${ctx}/resources/images/ic_cam.png" alt="사진 첨부">
 		                                            사진 첨부
-		                                            <input type="file" class="imageSelector" name="uploadFile step_uploadFile_1" accept="image/jpeg, image/jpg, image/png" multiple="">
+		                                            <input type="file" class="imageSelector" name="uploadFile1 step_uploadFile_1" accept="image/jpeg, image/jpg, image/png" multiple="">
 		                                        </label>
 		                                        <div class="thumb d_none">
 		                                            <img src="">
@@ -329,7 +334,7 @@ $(document).ready(function() {
                     <label>
                         <img src="${ctx}/resources/images/ic_cam.png" alt="사진 첨부">
                         사진 첨부
-                        <input type="file" class="imageSelector" name="uploadFile step_uploadFile_${newIndex}" accept="image/jpeg, image/jpg, image/png" multiple="">
+                        <input type="file" class="imageSelector" name="uploadFile1 step_uploadFile_${newIndex}" accept="image/jpeg, image/jpg, image/png" multiple="">
                     </label>
                     <div class="thumb d_none">
                         <img src="">
@@ -343,10 +348,13 @@ $(document).ready(function() {
         // 추가된 입력란의 이름 업데이트
         updateStepNames();
         
-     // 추가된 입력란에 이미지 첨부 스크립트 다시 실행
-        $(".imageSelector").off("change").on("change", function(e) {
-            var imageSelector = $(this);
-            var file = e.target.files[0];
+    });
+ 
+ // 조리순서 입력란 이미지 첨부 스크립트
+    $(".recipe_step").on("change", ".imageSelector", function(e) {
+        var imageSelector = $(this);
+        var file = e.target.files[0];
+        if (file) {
             if (isImageFile(file)) {
                 var reader = new FileReader();
                 reader.onload = function(e) {
@@ -354,12 +362,30 @@ $(document).ready(function() {
                     imageSelector.parent().siblings(".thumb").removeClass("d_none");
                 }
                 reader.readAsDataURL(file);
+
+                // 이미지를 서버에 전송
+                var formData = new FormData();
+                formData.append("uploadFile1", file);
+                formData.append("redirectPath", "recipe"); // 리다이렉트 경로 설정
+                
+                $.ajax({
+                    url: "${contextPath}/uploadRecipeStepImage",
+                    processData: false,
+                    contentType: false,
+                    data: formData,
+                    type: "POST",
+                    dataType: "json",
+                    success: function(result) {
+                        console.log(result);
+                        // 서버에서 이미지를 처리한 후의 작업 수행
+                    }
+                });
             } else {
                 alert("이미지 파일만 첨부 가능합니다.");
                 imageSelector.val("");
                 imageSelector.parent().siblings(".thumb").children("img").attr("src", "");
             }
-        });
+        }
     });
 
     // 조리순서 입력란 삭제
