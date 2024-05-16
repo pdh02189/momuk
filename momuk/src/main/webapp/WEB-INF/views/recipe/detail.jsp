@@ -96,7 +96,7 @@
                     <div class="comm_box_write mt25 pa20">
                         <textarea placeholder="댓글을 입력하세요" name="replytext" maxlength="500"></textarea>
                         <div class="write_info mt10">
-                            <p class="font_gray">0/500</p>
+                            <p class="font_gray"><span class="current_length">0</span>/500</p>
                             <button type="submit" class="comm_write_button btn_red" id="addReplyBtn">등록</button>
                         </div>
                     </div>

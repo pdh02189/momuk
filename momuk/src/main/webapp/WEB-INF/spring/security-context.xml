@@ -12,6 +12,7 @@
     
     <http pattern="/resources/**" security="none"></http>
     <http auto-config="true">
+    	<csrf disabled="true"/>
     	<intercept-url pattern="/resources/**" access="permitAll"/>
         <intercept-url pattern="/recipe/**" access="isAuthenticated()"/>
         <form-login

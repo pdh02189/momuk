@@ -37,8 +37,8 @@ import net.coobird.thumbnailator.Thumbnails;
 public class UploadController {
 	
 	private String uploadPath
-		= "C:\\Users\\pdh02\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\fileUpload";
-//		= "C:\\Users\\hanul\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\fileUpload";
+//		= "C:\\Users\\pdh02\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\fileUpload";
+		= "C:\\Users\\hanul\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\fileUpload";
 	
 	public void uploadForm() {
 		log.info("upload form..........................");
@@ -198,7 +198,7 @@ public class UploadController {
 	    session.setAttribute("filename", attachList.get(0).getFilename());
 
 	    // 조리순서 이미지 관련 정보 세션에 저장
-	    session.setAttribute("recipeStepImages", attachList);
+//	    session.setAttribute("recipeStepImages", attachList);
 
 	    // 리다이렉트 경로 생성
 	    String redirectUrl = "/" + redirectPath + "/write";
@@ -253,8 +253,8 @@ public class UploadController {
     	try {
     		// 서버에 저장할 경로
 //    		String uploadDirectory = context.getServletContext().getRealPath("/resources/assets/images/upload"); 
-    		String uploadDirectory = "C:\\Users\\pdh02\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\assets\\images\\upload"; 
-//    		String uploadDirectory = "C:\\Users\\hanul\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\assets\\images\\upload"; 
+//    		String uploadDirectory = "C:\\Users\\pdh02\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\assets\\images\\upload"; 
+    		String uploadDirectory = "C:\\Users\\hanul\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\assets\\images\\upload"; 
     		
     		// 업로드 된 파일의 이름
     		String originalFileName = file.getOriginalFilename();

@@ -29,7 +29,6 @@ CREATE TABLE member
    detailAddress varchar2(200),
    tel varchar2(50),
    gender varchar2(2),
-   birth date,
    regdate date DEFAULT SYSDATE,
    gradeKey varchar2(2) NOT NULL
 );

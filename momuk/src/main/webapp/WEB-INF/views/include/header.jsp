@@ -19,21 +19,21 @@
 </head>
 <body>
 	<c:set var="ctx" value="${pageContext.request.contextPath == '/' ? '': pageContext.request.contextPath}" scope="application"/>
-	<sec:authorize access="isAuthenticated()">
+<%-- 	<sec:authorize access="isAuthenticated()"> --%>
 
-    <sec:authentication property="principal" var="principal" />
+<%--     <sec:authentication property="principal" var="principal" /> --%>
 
-    <P>${principal}</P>
+<%--     <P>${principal}</P> --%>
 
-    <form action="<c:url value='/logout' />" method="post">
+<%--     <form action="<c:url value='/logout' />" method="post"> --%>
 
-        <sec:csrfInput/>
+<%--         <sec:csrfInput/> --%>
 
-        <button type="submit">로그아웃</button>
+<!--         <button type="submit">로그아웃</button> -->
 
-    </form>
+<!--     </form> -->
 
-</sec:authorize>
+<%-- </sec:authorize> --%>
     <div id="wrapper"> <!-- 로그인 시 login 관리자 로그인 시 admin 클래스 붙음 -->
     	<!-- 공유하기 팝업-->
         <div class="share_popup" style="display: none;">

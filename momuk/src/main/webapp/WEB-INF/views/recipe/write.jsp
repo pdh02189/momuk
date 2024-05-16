@@ -235,32 +235,32 @@ $(document).ready(function() {
                                     <button type="button" class="btn_list_plus">재료 추가</button>
                                 </div>
                             </div>
-                            <div class="comm_write_box">
-                                <div class="tit_box">
-                                    <h3 class="important">조리순서</h3>
-                                </div>
-                                <div class="cont_box">
-                                    <ul class="recipe_step">
-                                        <li>
-                                            <textarea placeholder="조리순서를 단계별로 입력하세요" class="h120" name="step_instruction_1"></textarea>
-                                            <div class="imgBox">
-		                                        <input class="upload-photo" value="" placeholder="">
-		                                        <label>
-		                                            <img src="${ctx}/resources/images/ic_cam.png" alt="사진 첨부">
-		                                            사진 첨부
-		                                            <input type="file" class="imageSelector" name="uploadFile1 step_uploadFile_1" accept="image/jpeg, image/jpg, image/png" multiple="">
-		                                        </label>
-		                                        <div class="thumb d_none">
-		                                            <img src="">
-		                                            <button type="button" class="dellink"></button>
-		                                        </div>
-		                                    </div>
-		                                    <button type="button" class="btn_step_del"></button>
-                                        </li>
-                                    </ul>
-                                    <button type="button" class="btn_step_plus">조리순서 추가</button>
-                                </div>
-                            </div>
+<!--                             <div class="comm_write_box"> -->
+<!--                                 <div class="tit_box"> -->
+<!--                                     <h3 class="important">조리순서</h3> -->
+<!--                                 </div> -->
+<!--                                 <div class="cont_box"> -->
+<!--                                     <ul class="recipe_step"> -->
+<!--                                         <li> -->
+<!--                                             <textarea placeholder="조리순서를 단계별로 입력하세요" class="h120" name="step_instruction_1"></textarea> -->
+<!--                                             <div class="imgBox"> -->
+<!-- 		                                        <input class="upload-photo" value="" placeholder=""> -->
+<!-- 		                                        <label> -->
+<%-- 		                                            <img src="${ctx}/resources/images/ic_cam.png" alt="사진 첨부"> --%>
+<!-- 		                                            사진 첨부 -->
+<!-- 		                                            <input type="file" class="imageSelector" name="uploadFile1 step_uploadFile_1" accept="image/jpeg, image/jpg, image/png" multiple=""> -->
+<!-- 		                                        </label> -->
+<!-- 		                                        <div class="thumb d_none"> -->
+<!-- 		                                            <img src=""> -->
+<!-- 		                                            <button type="button" class="dellink"></button> -->
+<!-- 		                                        </div> -->
+<!-- 		                                    </div> -->
+<!-- 		                                    <button type="button" class="btn_step_del"></button> -->
+<!--                                         </li> -->
+<!--                                     </ul> -->
+<!--                                     <button type="button" class="btn_step_plus">조리순서 추가</button> -->
+<!--                                 </div> -->
+<!--                             </div> -->
                             <div class="comm_write_box importantimg">
                                 <div class="tit_box">
                                     <h3 class="important">레시피 대표사진</h3>
