@@ -66,7 +66,7 @@ $(document).ready(function() {
 		return true;
 	}
 	
-	$("input[type='file']").change(function(e){
+	$(".importantimg input[type='file']").change(function(e){
 
 		var formData = new FormData();
 		    
@@ -235,32 +235,32 @@ $(document).ready(function() {
                                     <button type="button" class="btn_list_plus">재료 추가</button>
                                 </div>
                             </div>
-<!--                             <div class="comm_write_box"> -->
-<!--                                 <div class="tit_box"> -->
-<!--                                     <h3 class="important">조리순서</h3> -->
-<!--                                 </div> -->
-<!--                                 <div class="cont_box"> -->
-<!--                                     <ul class="recipe_step"> -->
-<!--                                         <li> -->
-<!--                                             <textarea placeholder="조리순서를 단계별로 입력하세요" class="h120" name="step_instruction_1"></textarea> -->
-<!--                                             <div class="imgBox"> -->
-<!-- 		                                        <input class="upload-photo" value="" placeholder=""> -->
-<!-- 		                                        <label> -->
-<%-- 		                                            <img src="${ctx}/resources/images/ic_cam.png" alt="사진 첨부"> --%>
-<!-- 		                                            사진 첨부 -->
-<!-- 		                                            <input type="file" class="imageSelector" name="uploadFile1 step_uploadFile_1" accept="image/jpeg, image/jpg, image/png" multiple=""> -->
-<!-- 		                                        </label> -->
-<!-- 		                                        <div class="thumb d_none"> -->
-<!-- 		                                            <img src=""> -->
-<!-- 		                                            <button type="button" class="dellink"></button> -->
-<!-- 		                                        </div> -->
-<!-- 		                                    </div> -->
-<!-- 		                                    <button type="button" class="btn_step_del"></button> -->
-<!--                                         </li> -->
-<!--                                     </ul> -->
-<!--                                     <button type="button" class="btn_step_plus">조리순서 추가</button> -->
-<!--                                 </div> -->
-<!--                             </div> -->
+                            <div class="comm_write_box">
+                                <div class="tit_box">
+                                    <h3 class="important">조리순서</h3>
+                                </div>
+                                <div class="cont_box">
+                                    <ul class="recipe_step">
+                                        <li>
+                                            <textarea placeholder="조리순서를 단계별로 입력하세요" class="h120" name="step_instruction_1"></textarea>
+                                            <div class="imgBox">
+		                                        <input class="upload-photo" value="" placeholder="">
+		                                        <label>
+		                                            <img src="${ctx}/resources/images/ic_cam.png" alt="사진 첨부">
+		                                            사진 첨부
+		                                            <input type="file" class="imageSelector" name="uploadFile1 step_uploadFile_1" accept="image/jpeg, image/jpg, image/png" multiple="">
+		                                        </label>
+		                                        <div class="thumb d_none">
+		                                            <img src="">
+		                                            <button type="button" class="dellink"></button>
+		                                        </div>
+		                                    </div>
+		                                    <button type="button" class="btn_step_del"></button>
+                                        </li>
+                                    </ul>
+                                    <button type="button" class="btn_step_plus">조리순서 추가</button>
+                                </div>
+                            </div>
                             <div class="comm_write_box importantimg">
                                 <div class="tit_box">
                                     <h3 class="important">레시피 대표사진</h3>
@@ -322,8 +322,8 @@ $(document).ready(function() {
             $(this).find("input[type='text']").eq(1).attr("name", "ingredient_measurement_" + num);
         });
     }
-    
- // 조리순서 입력란 추가
+
+    // 조리순서 입력란 추가
     $(".btn_step_plus").click(function() {
         let newIndex = $(".recipe_step li").length + 1;
         let newStepHtml = `
@@ -334,7 +334,7 @@ $(document).ready(function() {
                     <label>
                         <img src="${ctx}/resources/images/ic_cam.png" alt="사진 첨부">
                         사진 첨부
-                        <input type="file" class="imageSelector" name="uploadFile1 step_uploadFile_${newIndex}" accept="image/jpeg, image/jpg, image/png" multiple="">
+                        <input type="file" class="imageSelector" name="uploadFile_step_${newIndex}" accept="image/jpeg, image/jpg, image/png">
                     </label>
                     <div class="thumb d_none">
                         <img src="">
@@ -345,11 +345,9 @@ $(document).ready(function() {
             </li>
         `;
         $(".recipe_step").append(newStepHtml);
-        // 추가된 입력란의 이름 업데이트
         updateStepNames();
-        
     });
- 
+
  // 조리순서 입력란 이미지 첨부 스크립트
     $(".recipe_step").on("change", ".imageSelector", function(e) {
         var imageSelector = $(this);
@@ -363,26 +361,8 @@ $(document).ready(function() {
                 }
                 reader.readAsDataURL(file);
 
-                // 이미지를 서버에 전송
-                var formData = new FormData();
-                formData.append("uploadFile1", file);
-                
-             	// redirectPath 값 설정
-        	    var redirectPath = "recipe"; 
-        	    formData.append("redirectPath", redirectPath);
-                
-                $.ajax({
-                    url: "${contextPath}/uploadRecipeStepImage",
-                    processData: false,
-                    contentType: false,
-                    data: formData,
-                    type: "POST",
-                    dataType: "json",
-                    success: function(result) {
-                        console.log(result);
-                        // 서버에서 이미지를 처리한 후의 작업 수행
-                    }
-                });
+                // 이미지를 서버에 업로드
+                uploadImage(file, imageSelector);
             } else {
                 alert("이미지 파일만 첨부 가능합니다.");
                 imageSelector.val("");
@@ -391,22 +371,53 @@ $(document).ready(function() {
         }
     });
 
+    // 이미지 업로드 함수
+    function uploadImage(file, imageSelector) {
+        var formData = new FormData();
+        formData.append("uploadFile1", file);
+
+        $.ajax({
+            url: "${contextPath}/uploadRecipeStepImage",
+            processData: false,
+            contentType: false,
+            data: formData,
+            type: "POST",
+            dataType: "json",
+            success: function(result) {
+                console.log("이미지 업로드 성공:", result);
+                // 이미지 업로드 성공 시 처리할 로직 추가 (예: 서버에서 반환된 파일 경로를 저장)
+            },
+            error: function(err) {
+                console.error("이미지 업로드 실패:", err);
+                // 이미지 업로드 실패 시 처리할 로직 추가
+                alert("이미지 업로드에 실패했습니다.");
+                imageSelector.val("");
+                imageSelector.parent().siblings(".thumb").children("img").attr("src", "");
+            }
+        });
+    }
+
     // 조리순서 입력란 삭제
     $(document).on("click", ".btn_step_del", function() {
         $(this).closest("li").remove();
-        // 삭제된 입력란 이후의 모든 입력란의 이름 업데이트
         updateStepNames();
     });
 
     // 모든 입력란의 이름 업데이트 함수
     function updateStepNames() {
-    $(".recipe_step li").each(function(index) {
-        let num = index + 1;
-        $(this).find("textarea").attr("name", "step_instruction_" + num);
-        $(this).find("input[type='file']").attr("name", "uploadFile step_uploadFile_" + num);
-    });
-}
+        $(".recipe_step li").each(function(index) {
+            let num = index + 1;
+            $(this).find("textarea").attr("name", "step_instruction_" + num);
+            $(this).find("input[type='file']").attr("name", "uploadFile_step_" + num);
+        });
+    }
+    
+    function isImageFile(file) {
+        const acceptedImageTypes = ['image/jpeg', 'image/png'];
+        return file && acceptedImageTypes.includes(file['type']);
+    }
 });
+
 </script>
 
 

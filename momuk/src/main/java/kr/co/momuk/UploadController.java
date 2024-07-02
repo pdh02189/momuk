@@ -7,8 +7,10 @@ import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
@@ -24,7 +26,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import kr.co.momuk.domain.CommonBoardDTO;
@@ -37,8 +38,8 @@ import net.coobird.thumbnailator.Thumbnails;
 public class UploadController {
 	
 	private String uploadPath
-//		= "C:\\Users\\pdh02\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\fileUpload";
-		= "C:\\Users\\hanul\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\fileUpload";
+		= "C:\\Users\\pdh02\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\fileUpload";
+//		= "C:\\Users\\hanul\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\fileUpload";
 	
 	public void uploadForm() {
 		log.info("upload form..........................");
@@ -87,59 +88,7 @@ public class UploadController {
 		return false;
 	}
 	
-//	@PostMapping(value = "/uploadAjaxAction", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-//	public ResponseEntity<List<CommonBoardDTO>> uploadAjaxPost(MultipartFile[] uploadFile) {
-//		log.info("update ajax post.......................");
-//		List<CommonBoardDTO> attachList = new ArrayList<>();
-//		
-//		String uploadFolderPath = getFolder();
-//		
-//		File uploadFolder = new File(uploadPath, getFolder());
-//		log.info("uploadForder path : " + uploadFolder);
-//		
-//		if(uploadFolder.exists() == false) {
-//			uploadFolder.mkdirs();
-//		}
-//		
-//		for (MultipartFile multipartFile : uploadFile) {
-//			log.info("--------------------------");
-//			log.info("Upload file name : " + multipartFile.getOriginalFilename());
-//			log.info("Upload file size : " + multipartFile.getSize());
-//			log.info("Upload file content type : " + multipartFile.getContentType());
-//			
-//			CommonBoardDTO attachFileDTO = new CommonBoardDTO();
-//			
-//			String uploadFileName = multipartFile.getOriginalFilename();
-//			
-//			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\") + 1);
-//			log.info("only file name : " + uploadFileName);
-//			
-//			attachFileDTO.setFilename(uploadFileName);
-//			
-//			UUID uuid = UUID.randomUUID();
-//			
-//			uploadFileName = uuid.toString() + "_" + uploadFileName;
-//			
-//			try {
-//				File saveFile = new File(uploadFolder, uploadFileName);
-//				multipartFile.transferTo(saveFile);
-//				
-//				// UUID와 업로드 경로 설정
-//	            attachFileDTO.setUuid(uuid.toString());
-//	            attachFileDTO.setUploadpath(uploadFolderPath);
-//				
-//				if(checkImageType(saveFile)) {	
-//					File thumbnail = new File(uploadFolder, "s_" + uploadFileName);
-//					Thumbnails.of(saveFile).size(300, 300).toFile(thumbnail);
-//				}
-//				
-//				attachList.add(attachFileDTO);
-//			} catch (Exception e) {
-//				log.error(e.getMessage());
-//			}
-//		}
-//		return new ResponseEntity<>(attachList, HttpStatus.OK);
-//	}	
+
 	@PostMapping(value = "/uploadAjaxAction", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public RedirectView uploadAjaxPost(MultipartFile[] uploadFile, HttpSession session, @RequestParam("redirectPath") String redirectPath) {
 	    log.info("update ajax post.......................");
@@ -253,8 +202,8 @@ public class UploadController {
     	try {
     		// 서버에 저장할 경로
 //    		String uploadDirectory = context.getServletContext().getRealPath("/resources/assets/images/upload"); 
-//    		String uploadDirectory = "C:\\Users\\pdh02\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\assets\\images\\upload"; 
-    		String uploadDirectory = "C:\\Users\\hanul\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\assets\\images\\upload"; 
+    		String uploadDirectory = "C:\\Users\\pdh02\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\assets\\images\\upload"; 
+//    		String uploadDirectory = "C:\\Users\\hanul\\git\\momuk\\momuk\\src\\main\\webapp\\resources\\assets\\images\\upload"; 
     		
     		// 업로드 된 파일의 이름
     		String originalFileName = file.getOriginalFilename();
@@ -280,46 +229,57 @@ public class UploadController {
     }
     
     @PostMapping(value = "/uploadRecipeStepImage", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String uploadRecipeStepImage(@RequestParam("uploadFile") MultipartFile[] uploadFiles, HttpSession session, RedirectAttributes redirectAttributes) {
-        List<RecipeStepDTO> recipeStepImages = new ArrayList<>();
+    public ResponseEntity<?> uploadRecipeStepImage(@RequestParam("uploadFile") MultipartFile[] uploadFiles, HttpSession session) {
+        List<CommonBoardDTO> recipeStepImages = new ArrayList<>();
 
-        // 이미지 업로드 폴더 생성
         String uploadFolderPath = getFolder();
         File uploadFolder = new File(uploadPath, uploadFolderPath);
+        log.info("uploadFolder path : " + uploadFolder);
+
         if (!uploadFolder.exists()) {
             uploadFolder.mkdirs();
         }
 
-        // 업로드된 각 이미지 처리
         for (MultipartFile uploadFile : uploadFiles) {
-            RecipeStepDTO recipeStepDTO = new RecipeStepDTO();
-            String originalFilename = uploadFile.getOriginalFilename();
-            String uuid = UUID.randomUUID().toString();
-            String uploadFileName = uuid + "_" + originalFilename;
+            log.info("--------------------------");
+            log.info("Upload file name : " + uploadFile.getOriginalFilename());
+            log.info("Upload file size : " + uploadFile.getSize());
+            log.info("Upload file content type : " + uploadFile.getContentType());
+
+            CommonBoardDTO attachFileDTO = new CommonBoardDTO();
+
+            String uploadFileName = uploadFile.getOriginalFilename();
+            UUID uuid = UUID.randomUUID();
+            uploadFileName = uuid.toString() + "_" + uploadFileName;
 
             try {
-                // 업로드된 이미지 저장
                 File saveFile = new File(uploadFolder, uploadFileName);
                 uploadFile.transferTo(saveFile);
 
-                // DTO에 이미지 정보 설정
-                recipeStepDTO.setFilename(originalFilename);
-                recipeStepDTO.setUuid(uuid);
-                recipeStepDTO.setUploadpath(uploadFolderPath.replace("\\", "/"));
-                recipeStepImages.add(recipeStepDTO);
-            } catch (IOException e) {
-                e.printStackTrace();
-                // 업로드 중 오류 발생 시, 오류 메시지 전달
-                redirectAttributes.addFlashAttribute("error", "이미지 업로드 중 오류가 발생했습니다.");
-                return "redirect:/recipe/write";
+                // UUID와 업로드 경로 설정
+                attachFileDTO.setFilename(uploadFile.getOriginalFilename());
+                attachFileDTO.setUuid(uuid.toString());
+                attachFileDTO.setUploadpath(uploadFolderPath.replace("\\", "/"));
+
+                if (checkImageType(saveFile)) {
+                    File thumbnail = new File(uploadFolder, "s_" + uploadFileName);
+                    Thumbnails.of(saveFile).size(300, 300).toFile(thumbnail);
+                }
+
+                recipeStepImages.add(attachFileDTO);
+            } catch (Exception e) {
+                log.error(e.getMessage());
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body(Collections.singletonMap("error", "이미지 업로드 중 오류가 발생했습니다."));
             }
         }
 
-        // 조리순서 이미지 관련 정보 세션에 저장
+        // 세션에 조리 순서 이미지 정보 저장
         session.setAttribute("recipeStepImages", recipeStepImages);
 
-        // 글 작성 페이지로 리다이렉트
-        return "redirect:/recipe/write";
+        // 성공 시, 업로드된 이미지 정보 반환
+        return ResponseEntity.ok(recipeStepImages);
     }
-    
+
+
 }

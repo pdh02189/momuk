@@ -12,6 +12,7 @@
     	SELECT ingredientOrder, name, measurement
     	FROM ingredient
     	WHERE bno = #{bno}
+    	ORDER BY ingredientOrder
     </select>
     
     <update id="updateIngredient">

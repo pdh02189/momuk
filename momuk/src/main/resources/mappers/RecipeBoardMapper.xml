@@ -29,19 +29,52 @@
     </delete>
     
     <select id="selectAllRecipe" resultType="kr.co.momuk.domain.DetailDTO">
-    	<![CDATA[
+<!--     	<![CDATA[ -->
+<!-- 	        SELECT bno, -->
+<!-- 			       title, -->
+<!-- 			       writer, -->
+<!-- 			       regdate, -->
+<!-- 			       viewcnt, -->
+<!-- 			       replycnt, -->
+<!-- 			       uuid, -->
+<!-- 			       uploadpath, -->
+<!-- 			       filename, -->
+<!-- 			       heartcnt -->
+<!-- 	        FROM (SELECT /*+ INDEX (common_board COMMON_BOARD_BNO_PK) */ -->
+<!-- 	             	   cb.bno, -->
+<!-- 	                   cb.title, -->
+<!-- 	                   cb.writer, -->
+<!-- 	                   cb.regdate, -->
+<!-- 	                   cb.viewcnt, -->
+<!-- 	                   cb.replycnt, -->
+<!-- 	                   cb.uuid, -->
+<!-- 	                   cb.uploadpath, -->
+<!-- 	                   cb.filename, -->
+<!-- 	                   rb.heartcnt, -->
+<!-- 	                   rownum AS rn -->
+<!-- 	            FROM common_board cb -->
+<!-- 	            INNER JOIN recipe_board rb ON cb.bno = rb.bno -->
+<!-- 	            WHERE rownum <= #{pageNum} * #{amount} -->
+<!-- 	              AND cb.boardId = 2 -->
+<!-- 	              ORDER BY cb.bno DESC -->
+<!-- 	        ) -->
+<!-- 	        WHERE rn > (#{pageNum} - 1) * #{amount} -->
+	        
+<!-- 	    ]]> -->
+		<![CDATA[
 	        SELECT bno,
-			       title,
-			       writer,
-			       regdate,
-			       viewcnt,
-			       replycnt,
-			       uuid,
-			       uploadpath,
-			       filename,
-			       heartcnt
-	        FROM (SELECT /*+ INDEX_DESC(common_board COMMON_BOARD_BNO_PK) */
-	             	   cb.bno,
+	               title,
+	               writer,
+	               regdate,
+	               viewcnt,
+	               replycnt,
+	               uuid,
+	               uploadpath,
+	               filename,
+	               heartcnt
+	        FROM (
+	            SELECT /*+ INDEX (common_board COMMON_BOARD_BNO_PK) */
+	                   cb.bno,
 	                   cb.title,
 	                   cb.writer,
 	                   cb.regdate,
@@ -51,15 +84,13 @@
 	                   cb.uploadpath,
 	                   cb.filename,
 	                   rb.heartcnt,
-	                   rownum AS rn
+	                   ROW_NUMBER() OVER (ORDER BY cb.regdate DESC) AS rn
 	            FROM common_board cb
 	            INNER JOIN recipe_board rb ON cb.bno = rb.bno
-	            WHERE rownum <= #{pageNum} * #{amount}
-	              AND cb.boardId = 2
-	              ORDER BY bno DESC
+	            WHERE cb.boardId = 2
 	        )
 	        WHERE rn > (#{pageNum} - 1) * #{amount}
-	        
+	        AND rn <= #{pageNum} * #{amount}
 	    ]]>
     </select>
 	

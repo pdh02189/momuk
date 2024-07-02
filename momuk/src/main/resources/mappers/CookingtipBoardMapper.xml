@@ -29,33 +29,61 @@
     </delete>
     
     <select id="selectAllCookingtip" resultType="kr.co.momuk.domain.DetailDTO">
-    	<![CDATA[
-			SELECT	bno,
-					title,
-					writer,
-					regdate,
-					viewcnt,
-					replycnt,
-					uuid,
-					uploadpath,
-					filename
-			FROM	(SELECT /*+ INDEX_DESC(common_board COMMON_BOARD_BNO_PK) */
-						rownum rn,
-                        bno,
-                        boardId,
-						title,
-						writer,
-						regdate,
-						viewcnt,
-						replycnt,
-						uuid,
-						uploadpath,
-						filename
-                    FROM common_board
-                    WHERE rownum <= #{pageNum} * #{amount}
-                    AND boardId = 3)	
-			WHERE	rn > (#{pageNum} - 1) * #{amount}
-		]]>
+<!--     	<![CDATA[ -->
+<!-- 			SELECT	bno, -->
+<!-- 					title, -->
+<!-- 					writer, -->
+<!-- 					regdate, -->
+<!-- 					viewcnt, -->
+<!-- 					replycnt, -->
+<!-- 					uuid, -->
+<!-- 					uploadpath, -->
+<!-- 					filename -->
+<!-- 			FROM	(SELECT /*+ INDEX_DESC(common_board COMMON_BOARD_BNO_PK) */ -->
+<!-- 						rownum rn, -->
+<!--                         bno, -->
+<!--                         boardId, -->
+<!-- 						title, -->
+<!-- 						writer, -->
+<!-- 						regdate, -->
+<!-- 						viewcnt, -->
+<!-- 						replycnt, -->
+<!-- 						uuid, -->
+<!-- 						uploadpath, -->
+<!-- 						filename -->
+<!--                     FROM common_board -->
+<!--                     WHERE rownum <= #{pageNum} * #{amount} -->
+<!--                     AND boardId = 3)	 -->
+<!-- 			WHERE	rn > (#{pageNum} - 1) * #{amount} -->
+<!-- 		]]> -->
+		<![CDATA[
+	        SELECT  bno,
+	                title,
+	                writer,
+	                regdate,
+	                viewcnt,
+	                replycnt,
+	                uuid,
+	                uploadpath,
+	                filename
+	        FROM    (
+	                    SELECT  /*+ INDEX_DESC(common_board COMMON_BOARD_BNO_PK) */
+	                            bno,
+	                            title,
+	                            writer,
+	                            regdate,
+	                            viewcnt,
+	                            replycnt,
+	                            uuid,
+	                            uploadpath,
+	                            filename,
+	                            ROW_NUMBER() OVER (ORDER BY regdate DESC) AS rn
+	                    FROM    common_board
+	                    WHERE   boardId = 3
+	                )
+	        WHERE   rn > (#{pageNum} - 1) * #{amount}
+	        AND     rn <= #{pageNum} * #{amount}
+	    ]]>
     </select>
 	
 	<select id="getTotalCnt" resultType="int">

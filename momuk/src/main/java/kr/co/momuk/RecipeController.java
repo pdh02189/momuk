@@ -43,7 +43,6 @@ public class RecipeController {
 	public String addRecipe(@ModelAttribute CommonBoardDTO commonBoard,
 	                        @ModelAttribute RecipeBoardDTO recipe,
 	                        @RequestParam Map<String, String> params,
-	                        @RequestParam("uploadFile") MultipartFile[] uploadFiles,
 	                        Model model,
 	                        RedirectAttributes rttr,
 	                        HttpSession session) throws Exception {
@@ -121,12 +120,14 @@ public class RecipeController {
 	            recipeStep.setInstruction(instruction);
 	            recipeStep.setStepOrder(index);
 
-	            // 해당 단계의 이미지 파일 설정
-	            if (recipeStepImages != null && index - 1 < recipeStepImages.size()) {
+	            // 이미지 파일 설정
+	            if (recipeStepImages != null && !recipeStepImages.isEmpty() && index - 1 < recipeStepImages.size()) {
 	                CommonBoardDTO stepImage = recipeStepImages.get(index - 1);
-	                recipeStep.setUuid(stepImage.getUuid());
-	                recipeStep.setUploadpath(stepImage.getUploadpath());
-	                recipeStep.setFilename(stepImage.getFilename());
+	                if (stepImage != null) {
+	                    recipeStep.setUuid(stepImage.getUuid());
+	                    recipeStep.setUploadpath(stepImage.getUploadpath());
+	                    recipeStep.setFilename(stepImage.getFilename());
+	                }
 	            }
 
 	            recipeSteps.add(recipeStep);
@@ -134,6 +135,7 @@ public class RecipeController {
 	    }
 	    return recipeSteps;
 	}
+
 	
 	// 상세
 	@RequestMapping(value={"/detail", "/modify"}, method = RequestMethod.GET)
